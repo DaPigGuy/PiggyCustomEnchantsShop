@@ -61,21 +61,24 @@ class Shop
     /**
      * @return string
      */
-    public function getEnchantment(){
+    public function getEnchantment()
+    {
         return $this->enchantment;
     }
 
     /**
      * @return int
      */
-    public function getLevel(){
+    public function getLevel()
+    {
         return $this->level;
     }
 
     /**
      * @return int
      */
-    public function getPrice(){
+    public function getPrice()
+    {
         return $this->price;
     }
 }

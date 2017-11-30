@@ -4,7 +4,6 @@ namespace PiggyCustomEnchantsShop;
 
 use PiggyCustomEnchantsShop\Economy\BasicEconomy;
 use PiggyCustomEnchantsShop\Economy\EconomyAPI;
-
 use PiggyCustomEnchantsShop\Provider\YAMLProvider;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginBase;
@@ -31,7 +30,7 @@ class Main extends PluginBase
                     $this->economymanager = new EconomyAPI($this, $this->economy);
                     break;
             }
-            switch ($this->getConfig()->getNested("provider")){
+            switch ($this->getConfig()->getNested("provider")) {
                 case "yml":
                 case "yaml":
                 default:
@@ -83,7 +82,8 @@ class Main extends PluginBase
     /**
      * @return YAMLProvider
      */
-    public function getProvider(){
+    public function getProvider()
+    {
         return $this->provider;
     }
 

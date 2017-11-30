@@ -10,11 +10,6 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
-use function is_null;
-use function is_numeric;
-use function strtolower;
-use function time;
-use function ucfirst;
 
 /**
  * Class EventListener

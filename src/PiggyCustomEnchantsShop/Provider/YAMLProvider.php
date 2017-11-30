@@ -6,7 +6,6 @@ namespace PiggyCustomEnchantsShop\Provider;
 use PiggyCustomEnchantsShop\Main;
 use PiggyCustomEnchantsShop\Shop;
 use pocketmine\utils\Config;
-use function explode;
 
 /**
  * Class YAMLProvider
