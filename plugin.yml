@@ -1,0 +1,20 @@
+name: PiggyCustomEnchantsShop
+main: PiggyCustomEnchantsShop\Main
+version: 1.0.0
+api: 3.0.0-ALPHA9
+load: POSTWORLD
+author: DaPigGuy
+permissions:
+  piggycustomenchantsshop:
+    default: op
+    description: "Use everything in PiggyCustomEnchantsShop"
+    children:
+      piggycustomenchantsshop.breaksign:
+        default: op
+        descriptiom: "Break CE shop signs"
+      piggycustomenchantsshop.makesign:
+        default: op
+        description: "Make CE shop signs"
+      piggycustomenchantsshop.usesign:
+        default: true
+        description: "Use CE shop signs"
