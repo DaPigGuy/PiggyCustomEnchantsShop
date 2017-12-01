@@ -106,12 +106,16 @@ class EventListener implements Listener
                         if (is_numeric($text[1]) && is_null($enchantment = \PiggyCustomEnchants\CustomEnchants\CustomEnchants::getEnchantment($text[1])) !== true) {
                             $event->setLine(1, $enchantment->getName());
                         } else {
-                            //TODO: Invalid Enchantment
+                            $event->setLine(1, TextFormat::RED . "Invalid enchantment.");
                             return false;
                         }
                     }
-                    if (!is_numeric($text[2]) || !is_numeric($text[3])) {
-                        //TODO: Missing/Incorrect Values
+                    if (!is_numeric($text[2])) {
+                        $event->setLine(2, TextFormat::RED . "Missing/Invalid value.");
+                        return false;
+                    }
+                    if (!is_numeric($text[3])) {
+                        $event->setLine(3, TextFormat::RED . "Missing/Invalid value.");
                         return false;
                     }
                     $event->setLine(0, "[" . TextFormat::GREEN . "CE" . TextFormat::RESET . "]");
