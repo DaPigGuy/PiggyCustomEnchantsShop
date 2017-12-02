@@ -68,8 +68,8 @@ class EventListener implements Listener
                     if (!$this->plugin->getConfig()->getNested("double-tap")) {
                         $this->buyItem($player, $shop);
                     } else {
-                        if (!isset($this->tap[strtolower($player->getName())]) || (isset($this->tap[strtolower($player->getName())]) && $this->tap[strtolower($player->getName())] <= time())) {
-                            $this->tap[strtolower($player->getName())] = time() + 10;
+                        if (!isset($this->tap[$player->getLowerCaseName()]) || (isset($this->tap[$player->getLowerCaseName()]) && $this->tap[$player->getLowerCaseName()] <= time())) {
+                            $this->tap[$player->getLowerCaseName()] = time() + 10;
                             $player->sendMessage(TextFormat::YELLOW . "Tap again to buy " . $shop->getEnchantment() . " for " . $this->plugin->getEconomyManager()->getMonetaryUnit() . $shop->getPrice() . ".");
                         } else {
                             $this->buyItem($player, $shop);
@@ -139,8 +139,8 @@ class EventListener implements Listener
             $this->plugin->getEconomyManager()->takeMoney($player, $shop->getPrice());
         }
         $player->getInventory()->setItemInHand($this->plugin->ce->addEnchantment($player->getInventory()->getItemInHand(), $shop->getEnchantment(), $shop->getLevel(), true, $player)); //Still do it anyway to send the issue to player
-        if (isset($this->tap[strtolower($player->getName())])) {
-            unset($this->tap[strtolower($player->getName())]);
+        if (isset($this->tap[$player->getLowerCaseName()])) {
+            unset($this->tap[$player->getLowerCaseName()]);
         }
     }
 }
