@@ -135,7 +135,7 @@ class EventListener implements Listener
      */
     public function buyItem(Player $player, Shop $shop)
     {
-        if ($this->plugin->ce->canBeEnchanted($player->getInventory()->getItemInHand(), CustomEnchants::getEnchantmentByName($shop->getEnchantment()), $shop->getLevel())) {
+        if ($this->plugin->ce->canBeEnchanted($player->getInventory()->getItemInHand(), CustomEnchants::getEnchantmentByName($shop->getEnchantment()), $shop->getLevel()) === true) {
             $this->plugin->getEconomyManager()->takeMoney($player, $shop->getPrice());
         }
         $player->getInventory()->setItemInHand($this->plugin->ce->addEnchantment($player->getInventory()->getItemInHand(), $shop->getEnchantment(), $shop->getLevel(), true, $player)); //Still do it anyway to send the issue to player
