@@ -4,6 +4,8 @@
     <include_path>
       <path value="C:\Users\Kevin\Downloads\Pigsplosion-Hub\src" />
       <path value="C:\Users\Kevin\Documents\GitHub\PiggyCustomEnchants" />
+      <path value="C:\Users\Kevin\Downloads\Pigsplosion-Hub\plugins\FormAPI-master" />
+      <path value="C:\Users\Kevin\Downloads\Pigsplosion-Hub\plugins\EconomyAPI" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

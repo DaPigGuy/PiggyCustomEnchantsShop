@@ -2,10 +2,13 @@
 
 namespace PiggyCustomEnchantsShop;
 
+use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
+use PiggyCustomEnchantsShop\Commands\CustomEnchantShopCommand;
 use PiggyCustomEnchantsShop\Economy\BasicEconomy;
-use PiggyCustomEnchantsShop\Economy\EconomyAPI;
-use PiggyCustomEnchantsShop\Provider\YAMLProvider;
-use pocketmine\plugin\Plugin;
+use PiggyCustomEnchantsShop\Shops\Shop;
+use PiggyCustomEnchantsShop\Shops\SignShopsManager;
+use PiggyCustomEnchantsShop\Shops\UIShopsManager;
+use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 
@@ -15,30 +18,38 @@ use pocketmine\utils\TextFormat;
  */
 class Main extends PluginBase
 {
-    public $ce;
-    public $economy;
-    public $provider;
+    private $ce;
+    private $economy;
+    private $formsAPI = null;
 
     private $economymanager;
+    private $shopmanager;
 
     public function onEnable()
     {
         if ($this->checkDependents()) {
             $this->saveDefaultConfig();
-            switch ($this->economy->getName()) {
+            switch ($this->getEconomy()->getName()) {
                 case "EconomyAPI":
-                    $this->economymanager = new EconomyAPI($this, $this->economy);
+                    $this->economymanager = new \PiggyCustomEnchantsShop\Economy\EconomyAPI($this, $this->economy);
                     break;
             }
-            switch ($this->getConfig()->getNested("provider")) {
-                case "yml":
-                case "yaml":
+            switch ($this->getConfig()->getNested("shop-type")) {
+                case "ui":
+                    if (($formsAPI = $this->getServer()->getPluginManager()->getPlugin("FormAPI")) !== null) {
+                        $this->shopmanager = new UIShopsManager($this);
+                        $this->formsAPI = $formsAPI;
+                        $this->getServer()->getCommandMap()->register("customenchantshop", new CustomEnchantShopCommand("customenchantshop", $this));
+                        break;
+                    }
+                    $this->getLogger()->error("UI Shops require FormAPI by Jojoe77777. Using SignShops instead.");
+                case "sign":
                 default:
-                    $this->provider = new YAMLProvider($this);
+                    $this->shopmanager = new SignShopsManager($this);
+                    $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
                     break;
             }
-            $this->provider->initShops();
-            $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+            $this->shopmanager->initShops();
             $this->getLogger()->info(TextFormat::GREEN . "Enabled.");
         }
     }
@@ -64,7 +75,7 @@ class Main extends PluginBase
     }
 
     /**
-     * @return Plugin
+     * @return \onebone\economyapi\EconomyAPI
      */
     public function getEconomy()
     {
@@ -80,11 +91,37 @@ class Main extends PluginBase
     }
 
     /**
-     * @return YAMLProvider
+     * @return \PiggyCustomEnchants\Main
      */
-    public function getProvider()
+    public function getCustomEnchants()
     {
-        return $this->provider;
+        return $this->ce;
     }
 
+    /**
+     * @return \jojoe77777\FormAPI\FormAPI|null
+     */
+    public function getFormsAPI(){
+        return $this->formsAPI;
+    }
+
+    /**
+     * @return SignShopsManager|UIShopsManager
+     */
+    public function getShopManager()
+    {
+        return $this->shopmanager;
+    }
+
+    /**
+     * @param Player $player
+     * @param Shop $shop
+     */
+    public function buyItem(Player $player, Shop $shop)
+    {
+        if ($this->getCustomEnchants()->canBeEnchanted($player->getInventory()->getItemInHand(), CustomEnchants::getEnchantmentByName($shop->getEnchantment()), $shop->getEnchantLevel()) === true) {
+            $this->getEconomyManager()->takeMoney($player, $shop->getPrice());
+        }
+        $player->getInventory()->setItemInHand($this->getCustomEnchants()->addEnchantment($player->getInventory()->getItemInHand(), $shop->getEnchantment(), $shop->getEnchantLevel(), true, $player)); //Still do it anyway to send the issue to player
+    }
 }

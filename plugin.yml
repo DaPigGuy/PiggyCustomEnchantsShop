@@ -1,6 +1,6 @@
 name: PiggyCustomEnchantsShop
 main: PiggyCustomEnchantsShop\Main
-version: 1.0.0
+version: 1.0.1
 api: [3.0.0-ALPHA9, 3.0.0-ALPHA10]
 load: POSTWORLD
 author: DaPigGuy
@@ -18,3 +18,13 @@ permissions:
       piggycustomenchantsshop.usesign:
         default: true
         description: "Use CE shop signs"
+      piggycustomenchantsshop.command:
+        default: false
+        description: "Use all PiggyCustomEnchantsShop commands"
+        children:
+          piggycustomenchantsshop.command.add:
+            default: op
+            description: "Use /ceshop add"
+          piggycustomenchantsshop.command.use:
+            default: true
+            description: "Use /ceshop"

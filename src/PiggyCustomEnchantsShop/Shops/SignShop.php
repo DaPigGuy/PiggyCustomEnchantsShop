@@ -1,37 +1,35 @@
 <?php
 
-namespace PiggyCustomEnchantsShop;
+namespace PiggyCustomEnchantsShop\Shops;
 
 /**
- * Class Shop
- * @package PiggyCustomEnchantsShop
+ * Class SignShop
+ * @package PiggyCustomEnchantsShop\Shops
  */
-class Shop
+class SignShop extends Shop
 {
     private $x;
     private $y;
     private $z;
-    private $enchantment;
     private $level;
-    private $price;
 
     /**
-     * Shop constructor.
+     * SignShop constructor.
+     * @param string $enchantment
+     * @param int $enchantLevel
+     * @param int $price
      * @param int $x
      * @param int $y
      * @param int $z
-     * @param string $enchantment
-     * @param int $level
-     * @param int $price
+     * @param string $level
      */
-    public function __construct(int $x, int $y, int $z, string $enchantment, int $level, int $price)
+    public function __construct(string $enchantment, int $enchantLevel, int $price, int $x, int $y, int $z, string $level)
     {
+        parent::__construct($enchantment, $enchantLevel, $price);
         $this->x = $x;
         $this->y = $y;
         $this->z = $z;
-        $this->enchantment = $enchantment;
         $this->level = $level;
-        $this->price = $price;
     }
 
     /**
@@ -61,24 +59,8 @@ class Shop
     /**
      * @return string
      */
-    public function getEnchantment()
-    {
-        return $this->enchantment;
-    }
-
-    /**
-     * @return int
-     */
     public function getLevel()
     {
         return $this->level;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 }

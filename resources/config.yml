@@ -15,4 +15,4 @@
 #                      `--`-'     `--`-'       `--`
 
 double-tap: true
-provider: yaml
+shop-type: sign
