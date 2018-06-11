@@ -90,6 +90,9 @@ class CustomEnchantShopCommand extends PluginCommand
         return false;
     }
 
+    /**
+     * @param Player $player
+     */
     public function shopForm(Player $player)
     {
         $plugin = $this->getPlugin();
