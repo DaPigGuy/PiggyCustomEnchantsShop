@@ -62,13 +62,13 @@ class Main extends PluginBase
         $this->ce = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
         if (is_null($this->ce)) {
             $this->getLogger()->critical("PiggyCustomEnchants is required.");
-            $this->getPluginLoader()->disablePlugin($this);
+            $this->getServer()->getPluginManager()->disablePlugin($this);
             return false;
         }
         $this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         if (is_null($this->economy)) {
             $this->getLogger()->critical("EconomyAPI is required.");
-            $this->getPluginLoader()->disablePlugin($this);
+            $this->getServer()->getPluginManager()->disablePlugin($this);
             return false;
         }
         return true;
@@ -101,7 +101,8 @@ class Main extends PluginBase
     /**
      * @return \jojoe77777\FormAPI\FormAPI|null
      */
-    public function getFormsAPI(){
+    public function getFormsAPI()
+    {
         return $this->formsAPI;
     }
 

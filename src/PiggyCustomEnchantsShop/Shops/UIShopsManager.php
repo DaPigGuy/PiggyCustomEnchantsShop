@@ -30,7 +30,7 @@ class UIShopsManager
     public function initShops()
     {
         foreach ($this->file->getAll() as $key => $value) {
-            $this->shops[$key] = new UIShop($value[0], $value[1], $value[2], (int) str_replace("id:", "", $key));
+            $this->shops[$key] = new UIShop($value[0], $value[1], $value[2], (int)str_replace("id:", "", $key));
         }
     }
 
@@ -81,7 +81,8 @@ class UIShopsManager
     /**
      * @return int
      */
-    public function getNextId(){
+    public function getNextId()
+    {
         return count($this->shops);
     }
 }
