@@ -18,11 +18,16 @@ use pocketmine\utils\TextFormat;
  */
 class Main extends PluginBase
 {
+    /** @var \PiggyCustomEnchants\Main */
     private $ce;
+    /** @var \onebone\economyapi\EconomyAPI */
     private $economy;
+    /** @var \jojoe77777\FormAPI\FormAPI|null */
     private $formsAPI = null;
 
+    /** @var BasicEconomy */
     private $economymanager;
+    /** @var SignShopsManager|UIShopsManager */
     private $shopmanager;
 
     public function onEnable()

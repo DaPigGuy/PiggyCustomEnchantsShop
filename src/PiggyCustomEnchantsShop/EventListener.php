@@ -17,8 +17,10 @@ use pocketmine\utils\TextFormat;
  */
 class EventListener implements Listener
 {
+    /** @var Main */
     private $plugin;
 
+    /** @var array */
     private $tap;
 
     /**

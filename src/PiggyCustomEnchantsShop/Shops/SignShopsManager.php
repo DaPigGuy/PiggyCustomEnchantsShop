@@ -11,9 +11,12 @@ use pocketmine\utils\Config;
  */
 class SignShopsManager
 {
+    /** @var Main */
     private $plugin;
+    /** @var Config */
     private $file;
 
+    /** @var array */
     private $shops = [];
 
     /**

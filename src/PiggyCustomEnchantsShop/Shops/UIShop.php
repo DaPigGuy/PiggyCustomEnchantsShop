@@ -8,6 +8,7 @@ namespace PiggyCustomEnchantsShop\Shops;
  */
 class UIShop extends Shop
 {
+    /** @var int */
     private $id;
 
     /**

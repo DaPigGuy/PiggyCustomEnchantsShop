@@ -8,9 +8,13 @@ namespace PiggyCustomEnchantsShop\Shops;
  */
 class SignShop extends Shop
 {
+    /** @var int */
     private $x;
+    /** @var int */
     private $y;
+    /** @var int */
     private $z;
+    /** @var string */
     private $level;
 
     /**

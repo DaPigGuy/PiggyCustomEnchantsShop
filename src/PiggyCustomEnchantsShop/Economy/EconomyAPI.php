@@ -12,7 +12,9 @@ use pocketmine\plugin\Plugin;
  */
 class EconomyAPI implements BasicEconomy
 {
+    /** @var Main */
     private $plugin;
+    /** @var \onebone\economyapi\EconomyAPI */
     private $economy;
 
     /**

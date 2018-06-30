@@ -8,8 +8,11 @@ namespace PiggyCustomEnchantsShop\Shops;
  */
 class Shop
 {
+    /** @var string */
     private $enchantment;
+    /** @var int */
     private $enchantLevel;
+    /** @var int */
     private $price;
 
     /**

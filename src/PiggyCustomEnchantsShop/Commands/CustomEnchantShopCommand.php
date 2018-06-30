@@ -18,6 +18,7 @@ use pocketmine\utils\TextFormat;
  */
 class CustomEnchantShopCommand extends PluginCommand
 {
+    /** @var array */
     private $confirmations;
 
     /**
