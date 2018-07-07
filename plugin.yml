@@ -22,9 +22,13 @@ permissions:
         default: false
         description: "Use all PiggyCustomEnchantsShop commands"
         children:
-          piggycustomenchantsshop.command.add:
-            default: op
-            description: "Use /ceshop add"
-          piggycustomenchantsshop.command.use:
-            default: true
+          piggycustomenchantsshop.command.ceshop:
+            default: false
             description: "Use /ceshop"
+            children:
+              piggycustomenchantsshop.command.ceshop.add:
+                default: op
+                description: "Use /ceshop add"
+              piggycustomenchantsshop.command.ceshop.use:
+                default: true
+                description: "Use /ceshop"

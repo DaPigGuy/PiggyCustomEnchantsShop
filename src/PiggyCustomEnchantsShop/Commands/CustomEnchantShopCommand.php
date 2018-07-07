@@ -32,7 +32,7 @@ class CustomEnchantShopCommand extends PluginCommand
         $this->setDescription("");
         $this->setUsage("/customenchantshop [add]");
         $this->setAliases(["ceshop"]);
-        $this->setPermission("piggycustomenchantsshop.command");
+        $this->setPermission("piggycustomenchantsshop.command.ceshop");
     }
 
     /**
@@ -48,6 +48,10 @@ class CustomEnchantShopCommand extends PluginCommand
             if (isset($args[0])) {
                 switch ($args[0]) {
                     case "add":
+                        if(!$sender->hasPermission("piggycustomenchantsshop.command.ceshop.add")){
+                            $sender->sendMessage(TextFormat::RESET . "You do not have permission to do this.");
+                            return false;
+                        }
                         if (count($args) >= 4) {
                             $args[1] = ucfirst($args[1]);
                             if (is_null($enchantment = CustomEnchants::getEnchantmentByName($args[1])) && is_null($enchantment = CustomEnchants::getEnchantment($args[1]))) {
@@ -78,6 +82,10 @@ class CustomEnchantShopCommand extends PluginCommand
                 }
             }
             if ($sender instanceof Player) {
+                if(!$sender->hasPermission("piggycustomenchantsshop.command.ceshop.use")){
+                    $sender->sendMessage(TextFormat::RESET . "You do not have permission to do this.");
+                    return false;
+                }
                 $formsapi = $plugin->getFormsAPI();
                 if ($formsapi instanceof FormAPI && $formsapi->isEnabled()) {
                     $this->shopForm($sender);
