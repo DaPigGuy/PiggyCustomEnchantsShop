@@ -48,7 +48,7 @@ class CustomEnchantShopCommand extends PluginCommand
             if (isset($args[0])) {
                 switch ($args[0]) {
                     case "add":
-                        if(!$sender->hasPermission("piggycustomenchantsshop.command.ceshop.add")){
+                        if (!$sender->hasPermission("piggycustomenchantsshop.command.ceshop.add")) {
                             $sender->sendMessage(TextFormat::RESET . "You do not have permission to do this.");
                             return false;
                         }
@@ -82,7 +82,7 @@ class CustomEnchantShopCommand extends PluginCommand
                 }
             }
             if ($sender instanceof Player) {
-                if(!$sender->hasPermission("piggycustomenchantsshop.command.ceshop.use")){
+                if (!$sender->hasPermission("piggycustomenchantsshop.command.ceshop.use")) {
                     $sender->sendMessage(TextFormat::RESET . "You do not have permission to do this.");
                     return false;
                 }
@@ -108,11 +108,11 @@ class CustomEnchantShopCommand extends PluginCommand
         if ($plugin instanceof Main) {
             $formsapi = $plugin->getFormsAPI();
             if ($formsapi instanceof FormAPI && $formsapi->isEnabled()) {
-                $form = $formsapi->createSimpleForm(function (Player $player, $data) {
+                $form = $formsapi->createSimpleForm(function (Player $player, ?int $data) {
                     $plugin = $this->getPlugin();
                     if ($plugin instanceof Main) {
-                        if (isset($data[0]) && count($plugin->getShopManager()->getShops()) > $data[0]) {
-                            $this->confirmTransaction($player, $data[0]);
+                        if (!is_null($data) && count($plugin->getShopManager()->getShops()) > $data) {
+                            $this->confirmTransaction($player, $data);
                         }
                     }
                 });
@@ -137,11 +137,11 @@ class CustomEnchantShopCommand extends PluginCommand
             $formsapi = $plugin->getFormsAPI();
             if ($formsapi instanceof FormAPI && $formsapi->isEnabled()) {
                 $shop = $plugin->getShopManager()->getShopById($index);
-                $form = $formsapi->createSimpleForm(function (Player $player, $data) {
-                    if (isset($data[0])) {
+                $form = $formsapi->createSimpleForm(function (Player $player, ?int $data) {
+                    if (!is_null($data)) {
                         $plugin = $this->getPlugin();
                         if ($plugin instanceof Main) {
-                            switch ($data[0]) {
+                            switch ($data) {
                                 case 0:
                                     $shop = $plugin->getShopManager()->getShopById($this->confirmations[$player->getLowerCaseName()]);
                                     if ($plugin->getEconomyManager()->getMoney($player) >= $shop->getPrice()) {
@@ -177,29 +177,31 @@ class CustomEnchantShopCommand extends PluginCommand
         if ($plugin instanceof Main) {
             $formsapi = $plugin->getFormsAPI();
             if ($formsapi instanceof FormAPI && $formsapi->isEnabled()) {
-                $form = $formsapi->createCustomForm(function (Player $player, $data) {
+                $form = $formsapi->createCustomForm(function (Player $player, ?array $data) {
                     $plugin = $this->getPlugin();
                     if ($plugin instanceof Main) {
-                        if (isset($data[0]) && isset($data[1]) && isset($data[2])) {
-                            $data[0] = ucfirst($data[0]);
-                            if (is_null($enchantment = CustomEnchants::getEnchantmentByName($data[0])) && is_null($enchantment = CustomEnchants::getEnchantment($data[1]))) {
-                                $player->sendMessage(TextFormat::RED . "Invalid enchantment.");
-                                return false;
+                        if (!is_null($data)) {
+                            if (isset($data[0]) && isset($data[1]) && isset($data[2])) {
+                                $data[0] = ucfirst($data[0]);
+                                if (is_null($enchantment = CustomEnchants::getEnchantmentByName($data[0])) && is_null($enchantment = CustomEnchants::getEnchantment($data[1]))) {
+                                    $player->sendMessage(TextFormat::RED . "Invalid enchantment.");
+                                    return false;
+                                }
+                                if (!is_numeric($data[1])) {
+                                    $player->sendMessage(TextFormat::RED . "Level must be numerical.");
+                                    return false;
+                                }
+                                if (!is_numeric($data[2])) {
+                                    $player->sendMessage(TextFormat::RED . "Price must be numerical.");
+                                    return false;
+                                }
+                                if ($data[1] > $max = $plugin->getCustomEnchants()->getEnchantMaxLevel($enchantment)) {
+                                    $data[1] = $max;
+                                }
+                                $plugin->getShopManager()->addShop(new UIShop($data[0], $data[1], $data[2], $plugin->getShopManager()->getNextId()));
+                                $player->sendMessage(TextFormat::GREEN . "Shop added!");
+                                return true;
                             }
-                            if (!is_numeric($data[1])) {
-                                $player->sendMessage(TextFormat::RED . "Level must be numerical.");
-                                return false;
-                            }
-                            if (!is_numeric($data[2])) {
-                                $player->sendMessage(TextFormat::RED . "Price must be numerical.");
-                                return false;
-                            }
-                            if ($data[1] > $max = $plugin->getCustomEnchants()->getEnchantMaxLevel($enchantment)) {
-                                $data[1] = $max;
-                            }
-                            $plugin->getShopManager()->addShop(new UIShop($data[0], $data[1], $data[2], $plugin->getShopManager()->getNextId()));
-                            $player->sendMessage(TextFormat::GREEN . "Shop added!");
-                            return true;
                         }
                         return false;
                     }
