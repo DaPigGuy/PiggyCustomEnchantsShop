@@ -90,7 +90,6 @@ class EventListener implements Listener
      *
      * @priority HIGHEST
      * @ignoreCancelled true
-     * @return bool
      */
     public function onSignChange(SignChangeEvent $event)
     {
@@ -103,23 +102,23 @@ class EventListener implements Listener
                 case "ce":
                     if (!$player->hasPermission("piggycustomenchantsshop.makesign")) {
                         $event->setLines([TextFormat::RED . "You are not allowed", "to do this.", "", ""]);
-                        return false;
+                        return;
                     }
                     if (is_null($enchantment = CustomEnchants::getEnchantmentByName($text[1]))) {
                         if (is_numeric($text[1]) && is_null($enchantment = CustomEnchants::getEnchantment($text[1])) !== true) {
                             $event->setLine(1, $enchantment->getName());
                         } else {
                             $event->setLine(1, TextFormat::RED . "Invalid enchantment.");
-                            return false;
+                            return;
                         }
                     }
                     if (!is_numeric($text[2])) {
                         $event->setLine(2, TextFormat::RED . "Missing/Invalid value.");
-                        return false;
+                        return;
                     }
                     if (!is_numeric($text[3])) {
                         $event->setLine(3, TextFormat::RED . "Missing/Invalid value.");
-                        return false;
+                        return;
                     }
                     $event->setLine(0, "[" . TextFormat::GREEN . "CE" . TextFormat::RESET . "]");
                     $event->setLine(1, ucfirst($text[1]));
@@ -129,6 +128,5 @@ class EventListener implements Listener
                     break;
             }
         }
-        return true;
     }
 }
