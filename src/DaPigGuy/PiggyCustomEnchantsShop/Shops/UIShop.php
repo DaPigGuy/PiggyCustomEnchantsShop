@@ -1,10 +1,10 @@
 <?php
 
-namespace PiggyCustomEnchantsShop\Shops;
+namespace DaPigGuy\PiggyCustomEnchantsShop\Shops;
 
 /**
  * Class UIShop
- * @package PiggyCustomEnchantsShop\Shops
+ * @package DaPigGuy\PiggyCustomEnchantsShop\Shops
  */
 class UIShop extends Shop
 {
@@ -14,9 +14,9 @@ class UIShop extends Shop
     /**
      * SignShop constructor.
      * @param string $enchantment
-     * @param int $enchantLevel
-     * @param int $price
-     * @param int $id
+     * @param int    $enchantLevel
+     * @param int    $price
+     * @param int    $id
      */
     public function __construct(string $enchantment, int $enchantLevel, int $price, int $id)
     {

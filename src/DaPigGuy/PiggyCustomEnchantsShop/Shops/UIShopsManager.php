@@ -1,13 +1,13 @@
 <?php
 
-namespace PiggyCustomEnchantsShop\Shops;
+namespace DaPigGuy\PiggyCustomEnchantsShop\Shops;
 
-use PiggyCustomEnchantsShop\Main;
+use DaPigGuy\PiggyCustomEnchantsShop\Main;
 use pocketmine\utils\Config;
 
 /**
  * Class UIShopsManager
- * @package PiggyCustomEnchantsShop\Shops
+ * @package DaPigGuy\PiggyCustomEnchantsShop\Shops
  */
 class UIShopsManager
 {

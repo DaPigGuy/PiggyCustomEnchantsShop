@@ -1,20 +1,20 @@
 <?php
 
-namespace PiggyCustomEnchantsShop;
+namespace DaPigGuy\PiggyCustomEnchantsShop;
 
+use DaPigGuy\PiggyCustomEnchantsShop\Commands\CustomEnchantShopCommand;
+use DaPigGuy\PiggyCustomEnchantsShop\Economy\BasicEconomy;
+use DaPigGuy\PiggyCustomEnchantsShop\Economy\EconomyAPI;
+use DaPigGuy\PiggyCustomEnchantsShop\Shops\Shop;
+use DaPigGuy\PiggyCustomEnchantsShop\Shops\SignShopsManager;
+use DaPigGuy\PiggyCustomEnchantsShop\Shops\UIShopsManager;
 use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
-use PiggyCustomEnchantsShop\Commands\CustomEnchantShopCommand;
-use PiggyCustomEnchantsShop\Economy\BasicEconomy;
-use PiggyCustomEnchantsShop\Shops\Shop;
-use PiggyCustomEnchantsShop\Shops\SignShopsManager;
-use PiggyCustomEnchantsShop\Shops\UIShopsManager;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\TextFormat;
 
 /**
  * Class Main
- * @package PiggyCustomEnchantsShop
+ * @package DaPigGuy\PiggyCustomEnchantsShop
  */
 class Main extends PluginBase
 {
@@ -22,8 +22,6 @@ class Main extends PluginBase
     private $ce;
     /** @var \onebone\economyapi\EconomyAPI */
     private $economy;
-    /** @var \jojoe77777\FormAPI\FormAPI|null */
-    private $formsAPI = null;
 
     /** @var BasicEconomy */
     private $economymanager;
@@ -36,18 +34,14 @@ class Main extends PluginBase
             $this->saveDefaultConfig();
             switch ($this->getEconomy()->getName()) {
                 case "EconomyAPI":
-                    $this->economymanager = new \PiggyCustomEnchantsShop\Economy\EconomyAPI($this, $this->economy);
+                    $this->economymanager = new EconomyAPI($this, $this->economy);
                     break;
             }
             switch ($this->getConfig()->getNested("shop-type")) {
                 case "ui":
-                    if (($formsAPI = $this->getServer()->getPluginManager()->getPlugin("FormAPI")) !== null) {
-                        $this->shopmanager = new UIShopsManager($this);
-                        $this->formsAPI = $formsAPI;
-                        $this->getServer()->getCommandMap()->register("customenchantshop", new CustomEnchantShopCommand("customenchantshop", $this));
-                        break;
-                    }
-                    $this->getLogger()->error("UI Shops require FormAPI by Jojoe77777. Using SignShops instead.");
+                    $this->shopmanager = new UIShopsManager($this);
+                    $this->getServer()->getCommandMap()->register("piggycustomenchantsshop", new CustomEnchantShopCommand("customenchantshop", $this));
+                    break;
                 case "sign":
                 default:
                     $this->shopmanager = new SignShopsManager($this);
@@ -55,7 +49,6 @@ class Main extends PluginBase
                     break;
             }
             $this->shopmanager->initShops();
-            $this->getLogger()->info(TextFormat::GREEN . "Enabled.");
         }
     }
 
@@ -104,14 +97,6 @@ class Main extends PluginBase
     }
 
     /**
-     * @return \jojoe77777\FormAPI\FormAPI|null
-     */
-    public function getFormsAPI()
-    {
-        return $this->formsAPI;
-    }
-
-    /**
      * @return SignShopsManager|UIShopsManager
      */
     public function getShopManager()
@@ -121,7 +106,7 @@ class Main extends PluginBase
 
     /**
      * @param Player $player
-     * @param Shop $shop
+     * @param Shop   $shop
      */
     public function buyItem(Player $player, Shop $shop)
     {

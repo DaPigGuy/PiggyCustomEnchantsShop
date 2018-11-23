@@ -1,18 +1,18 @@
 <?php
 
-namespace PiggyCustomEnchantsShop\Economy;
+namespace DaPigGuy\PiggyCustomEnchantsShop\Economy;
 
 use pocketmine\Player;
 
 /**
  * Class BasicEconomy
- * @package PiggyCustomEnchantsShop\Economy
+ * @package DaPigGuy\PiggyCustomEnchantsShop\Economy
  */
 interface BasicEconomy
 {
     /**
      * @param Player $player
-     * @param int $amount
+     * @param int    $amount
      * @return mixed
      */
     public function takeMoney(Player $player, int $amount);

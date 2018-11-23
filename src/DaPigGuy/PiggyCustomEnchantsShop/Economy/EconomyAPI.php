@@ -1,14 +1,14 @@
 <?php
 
-namespace PiggyCustomEnchantsShop\Economy;
+namespace DaPigGuy\PiggyCustomEnchantsShop\Economy;
 
-use PiggyCustomEnchantsShop\Main;
+use DaPigGuy\PiggyCustomEnchantsShop\Main;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 
 /**
  * Class EconomyAPI
- * @package PiggyCustomEnchantsShop\Economy
+ * @package DaPigGuy\PiggyCustomEnchantsShop\Economy
  */
 class EconomyAPI implements BasicEconomy
 {
@@ -19,7 +19,7 @@ class EconomyAPI implements BasicEconomy
 
     /**
      * EconomyAPI constructor.
-     * @param Main $plugin
+     * @param Main   $plugin
      * @param Plugin $economy
      */
     public function __construct(Main $plugin, Plugin $economy)
@@ -30,7 +30,7 @@ class EconomyAPI implements BasicEconomy
 
     /**
      * @param Player $player
-     * @param int $amount
+     * @param int    $amount
      * @return mixed
      */
     public function takeMoney(Player $player, int $amount)

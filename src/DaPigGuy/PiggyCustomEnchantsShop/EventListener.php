@@ -1,9 +1,9 @@
 <?php
 
-namespace PiggyCustomEnchantsShop;
+namespace DaPigGuy\PiggyCustomEnchantsShop;
 
+use DaPigGuy\PiggyCustomEnchantsShop\Shops\SignShop;
 use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
-use PiggyCustomEnchantsShop\Shops\SignShop;
 use pocketmine\block\SignPost;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\SignChangeEvent;
@@ -13,7 +13,7 @@ use pocketmine\utils\TextFormat;
 
 /**
  * Class EventListener
- * @package PiggyCustomEnchantsShop
+ * @package DaPigGuy\PiggyCustomEnchantsShop
  */
 class EventListener implements Listener
 {

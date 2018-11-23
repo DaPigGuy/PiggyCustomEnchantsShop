@@ -1,13 +1,13 @@
 <?php
 
-namespace PiggyCustomEnchantsShop\Shops;
+namespace DaPigGuy\PiggyCustomEnchantsShop\Shops;
 
-use PiggyCustomEnchantsShop\Main;
+use DaPigGuy\PiggyCustomEnchantsShop\Main;
 use pocketmine\utils\Config;
 
 /**
  * Class SignShopsManager
- * @package PiggyCustomEnchantsShop\Shops
+ * @package DaPigGuy\PiggyCustomEnchantsShop\Shops
  */
 class SignShopsManager
 {
@@ -65,9 +65,9 @@ class SignShopsManager
     }
 
     /**
-     * @param int $x
-     * @param int $y
-     * @param int $z
+     * @param int    $x
+     * @param int    $y
+     * @param int    $z
      * @param string $level
      * @return null
      */
