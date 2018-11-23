@@ -1,7 +1,7 @@
 name: PiggyCustomEnchantsShop
 main: DaPigGuy\PiggyCustomEnchantsShop\Main
-version: 1.2.0
-api: 3.0.0
+version: 1.2.1
+api: 3.2.0
 load: POSTWORLD
 author: DaPigGuy
 permissions:

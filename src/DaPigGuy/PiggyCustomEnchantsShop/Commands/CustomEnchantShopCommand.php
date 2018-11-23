@@ -2,11 +2,11 @@
 
 namespace DaPigGuy\PiggyCustomEnchantsShop\Commands;
 
+use DaPigGuy\PiggyCustomEnchants\CustomEnchants\CustomEnchants;
 use DaPigGuy\PiggyCustomEnchantsShop\Main;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\UIShop;
 use jojoe77777\FormAPI\CustomForm;
 use jojoe77777\FormAPI\SimpleForm;
-use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
 use pocketmine\Player;

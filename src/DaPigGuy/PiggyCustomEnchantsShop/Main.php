@@ -2,13 +2,13 @@
 
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
+use DaPigGuy\PiggyCustomEnchants\CustomEnchants\CustomEnchants;
 use DaPigGuy\PiggyCustomEnchantsShop\Commands\CustomEnchantShopCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\Economy\BasicEconomy;
 use DaPigGuy\PiggyCustomEnchantsShop\Economy\EconomyAPI;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\Shop;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\SignShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\UIShopsManager;
-use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
@@ -18,7 +18,7 @@ use pocketmine\plugin\PluginBase;
  */
 class Main extends PluginBase
 {
-    /** @var \PiggyCustomEnchants\Main */
+    /** @var \DaPigGuy\PiggyCustomEnchants\Main */
     private $ce;
     /** @var \onebone\economyapi\EconomyAPI */
     private $economy;
@@ -89,7 +89,7 @@ class Main extends PluginBase
     }
 
     /**
-     * @return \PiggyCustomEnchants\Main
+     * @return \DaPigGuy\PiggyCustomEnchants\Main
      */
     public function getCustomEnchants()
     {

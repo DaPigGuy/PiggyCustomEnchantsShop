@@ -2,8 +2,8 @@
 
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
+use DaPigGuy\PiggyCustomEnchants\CustomEnchants\CustomEnchants;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\SignShop;
-use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
 use pocketmine\block\SignPost;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\SignChangeEvent;
