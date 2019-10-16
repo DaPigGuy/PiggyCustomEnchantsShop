@@ -2,7 +2,7 @@
 
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
-use DaPigGuy\PiggyCustomEnchants\CustomEnchants\CustomEnchants;
+use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\SignShop;
 use pocketmine\block\SignPost;
 use pocketmine\event\block\BlockBreakEvent;
@@ -104,8 +104,8 @@ class EventListener implements Listener
                         $event->setLines([TextFormat::RED . "You are not allowed", "to do this.", "", ""]);
                         return;
                     }
-                    if (is_null($enchantment = CustomEnchants::getEnchantmentByName($text[1]))) {
-                        if (is_numeric($text[1]) && is_null($enchantment = CustomEnchants::getEnchantment($text[1])) !== true) {
+                    if (is_null($enchantment = CustomEnchantManager::getEnchantmentByName($text[1]))) {
+                        if (is_numeric($text[1]) && is_null($enchantment = CustomEnchantManager::getEnchantment($text[1])) !== true) {
                             $event->setLine(1, $enchantment->getName());
                         } else {
                             $event->setLine(1, TextFormat::RED . "Invalid enchantment.");

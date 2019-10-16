@@ -2,15 +2,18 @@
 
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
-use DaPigGuy\PiggyCustomEnchants\CustomEnchants\CustomEnchants;
+use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
+use DaPigGuy\PiggyCustomEnchants\utils\Utils;
 use DaPigGuy\PiggyCustomEnchantsShop\Commands\CustomEnchantShopCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\Economy\BasicEconomy;
 use DaPigGuy\PiggyCustomEnchantsShop\Economy\EconomyAPI;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\Shop;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\SignShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\UIShopsManager;
+use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\TextFormat;
 
 /**
  * Class Main
@@ -18,8 +21,6 @@ use pocketmine\plugin\PluginBase;
  */
 class Main extends PluginBase
 {
-    /** @var \DaPigGuy\PiggyCustomEnchants\Main */
-    private $ce;
     /** @var \onebone\economyapi\EconomyAPI */
     private $economy;
 
@@ -57,8 +58,7 @@ class Main extends PluginBase
      */
     public function checkDependents()
     {
-        $this->ce = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
-        if (is_null($this->ce)) {
+        if (is_null($this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants"))) {
             $this->getLogger()->critical("PiggyCustomEnchants is required.");
             $this->getServer()->getPluginManager()->disablePlugin($this);
             return false;
@@ -89,14 +89,6 @@ class Main extends PluginBase
     }
 
     /**
-     * @return \DaPigGuy\PiggyCustomEnchants\Main
-     */
-    public function getCustomEnchants()
-    {
-        return $this->ce;
-    }
-
-    /**
      * @return SignShopsManager|UIShopsManager
      */
     public function getShopManager()
@@ -106,13 +98,18 @@ class Main extends PluginBase
 
     /**
      * @param Player $player
-     * @param Shop   $shop
+     * @param Shop $shop
      */
     public function buyItem(Player $player, Shop $shop)
     {
-        if ($this->getCustomEnchants()->canBeEnchanted($player->getInventory()->getItemInHand(), CustomEnchants::getEnchantmentByName($shop->getEnchantment()), $shop->getEnchantLevel()) === true) {
+        if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), CustomEnchantManager::getEnchantmentByName($shop->getEnchantment()), $shop->getEnchantLevel())) {
             $this->getEconomyManager()->takeMoney($player, $shop->getPrice());
+            $item = $player->getInventory()->getItemInHand();
+            $item->addEnchantment(new EnchantmentInstance(CustomEnchantManager::getEnchantmentByName($shop->getEnchantment()), $shop->getEnchantLevel()));
+            $player->getInventory()->setItemInHand($item);
+            $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
+            return;
         }
-        $player->getInventory()->setItemInHand($this->getCustomEnchants()->addEnchantment($player->getInventory()->getItemInHand(), $shop->getEnchantment(), $shop->getEnchantLevel(), true, $player)); //Still do it anyway to send the issue to player
+        $player->sendMessage(TextFormat::RED . "Enchantment could not be applied to item.");
     }
 }

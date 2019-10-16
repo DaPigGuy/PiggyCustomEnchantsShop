@@ -2,7 +2,8 @@
 
 namespace DaPigGuy\PiggyCustomEnchantsShop\Commands;
 
-use DaPigGuy\PiggyCustomEnchants\CustomEnchants\CustomEnchants;
+use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
+use DaPigGuy\PiggyCustomEnchants\utils\Utils;
 use DaPigGuy\PiggyCustomEnchantsShop\Main;
 use DaPigGuy\PiggyCustomEnchantsShop\Shops\UIShop;
 use jojoe77777\FormAPI\CustomForm;
@@ -53,7 +54,7 @@ class CustomEnchantShopCommand extends PluginCommand
                         }
                         if (count($args) >= 4) {
                             $args[1] = ucfirst($args[1]);
-                            if (is_null($enchantment = CustomEnchants::getEnchantmentByName($args[1])) && is_null($enchantment = CustomEnchants::getEnchantment($args[1]))) {
+                            if (is_null($enchantment = CustomEnchantManager::getEnchantmentByName($args[1])) && is_null($enchantment = CustomEnchantManager::getEnchantment($args[1]))) {
                                 $sender->sendMessage(TextFormat::RED . "Invalid enchantment.");
                                 return;
                             }
@@ -109,7 +110,7 @@ class CustomEnchantShopCommand extends PluginCommand
             });
             $form->setTitle(TextFormat::GREEN . "Custom Enchants Shop");
             foreach ($plugin->getShopManager()->getShops() as $shop) {
-                $form->addButton($shop->getEnchantment() . " " . $plugin->getCustomEnchants()->getRomanNumber($shop->getEnchantLevel()));
+                $form->addButton($shop->getEnchantment() . " " . Utils::getRomanNumeral($shop->getEnchantLevel()));
             }
             $form->addButton("Exit");
             $player->sendForm($form);
@@ -147,7 +148,7 @@ class CustomEnchantShopCommand extends PluginCommand
                 }
             });
             $form->setTitle("Confirmation");
-            $form->setContent("Are you sure you would like to buy the enchantment " . $shop->getEnchantment() . " " . $plugin->getCustomEnchants()->getRomanNumber($shop->getEnchantLevel()) . " for " . $plugin->getEconomyManager()->getMonetaryUnit() . $shop->getPrice() . "?");
+            $form->setContent("Are you sure you would like to buy the enchantment " . $shop->getEnchantment() . " " . Utils::getRomanNumeral($shop->getEnchantLevel()) . " for " . $plugin->getEconomyManager()->getMonetaryUnit() . $shop->getPrice() . "?");
             $form->addButton("Yes");
             $form->addButton("No");
             $player->sendForm($form);
@@ -168,7 +169,7 @@ class CustomEnchantShopCommand extends PluginCommand
                     if (!is_null($data)) {
                         if (isset($data[0]) && isset($data[1]) && isset($data[2])) {
                             $data[0] = ucfirst($data[0]);
-                            if (is_null($enchantment = CustomEnchants::getEnchantmentByName($data[0])) && is_null($enchantment = CustomEnchants::getEnchantment($data[1]))) {
+                            if (is_null($enchantment = CustomEnchantManager::getEnchantmentByName($data[0])) && is_null($enchantment = CustomEnchantManager::getEnchantment($data[1]))) {
                                 $player->sendMessage(TextFormat::RED . "Invalid enchantment.");
                                 return;
                             }
@@ -180,7 +181,7 @@ class CustomEnchantShopCommand extends PluginCommand
                                 $player->sendMessage(TextFormat::RED . "Price must be numerical.");
                                 return;
                             }
-                            if ($data[1] > $max = $plugin->getCustomEnchants()->getEnchantMaxLevel($enchantment)) {
+                            if ($data[1] > $max = $enchantment->getMaxLevel()) {
                                 $data[1] = $max;
                             }
                             $plugin->getShopManager()->addShop(new UIShop($data[0], $data[1], $data[2], $plugin->getShopManager()->getNextId()));
