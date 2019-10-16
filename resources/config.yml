@@ -1,9 +1,14 @@
-# PiggyCustomEnchantsShop Configuration
-
-# Whether to use SignShop or UIShop.
-# Options: sign | ui
-shop-type: sign
-
-# If SignShop is enabled, require users to double click for purchase.
-# Options: true | false
-double-tap: true
+economy:
+  provider: EconomyS
+  currency-format: "${amount}"
+shop-types:
+  sign:
+    enabled: true
+    double-tap: true
+    format:
+      line-one: "[&aCE&r]"
+      line-two: "{enchantment}"
+      line-three: "Level: {level}"
+      line-four: "Price: {price}"
+  ui:
+    enabled: true
