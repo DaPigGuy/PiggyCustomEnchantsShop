@@ -11,5 +11,5 @@ You can either use SignShops or UIShops, which uses [libFormAPI](https://github.
 * We are using the [libFormAPI](https://github.com/jojoe77777/FormAPI), so there is no need to install the FormAPI plugin.
     * In other words, you must use the pre-compiled phar from [Poggit-CI](https://poggit.pmmp.io/ci/DaPigGuy/PiggyCustomEnchantsShop/~) instead of GitHub.
     * If you wish to run it via source, check out [DEVirion](https://github.com/poggit/devirion).
-* Check out our installation guide at [PiggyDocs.](https://dapigguy.github.io/PiggyCustomEnchantsShop/)
+* Check out our installation guide at [PiggyDocs.](https://piggydocs.aericio.net/PiggyCustomEnchantsShop.html)
 * Check out our [Discord Server](https://discord.gg/ZZewRQH) for additional plugin support.
