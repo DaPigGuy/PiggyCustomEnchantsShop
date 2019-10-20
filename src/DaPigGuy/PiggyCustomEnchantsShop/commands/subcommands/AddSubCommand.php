@@ -42,7 +42,7 @@ class AddSubCommand extends BaseSubCommand
      */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (count($args) >= 4) {
+        if (count($args) >= 3) {
             if (($enchantment = CustomEnchantManager::getEnchantmentByName($args["enchantment"])) === null && ($enchantment = CustomEnchantManager::getEnchantment($args["enchantment"])) === null) {
                 $sender->sendMessage(TextFormat::RED . "Invalid enchantment.");
                 return;
