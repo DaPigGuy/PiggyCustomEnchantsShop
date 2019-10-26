@@ -39,7 +39,7 @@ class EventListener implements Listener
     /**
      * @param BlockBreakEvent $event
      */
-    public function onBreak(BlockBreakEvent $event)
+    public function onBreak(BlockBreakEvent $event): void
     {
         $player = $event->getPlayer();
         $tile = $event->getBlock()->getLevel()->getTile($event->getBlock());

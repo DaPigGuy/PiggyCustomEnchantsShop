@@ -38,7 +38,7 @@ class ShopSignTile extends Sign
     /**
      * @param Enchantment $enchantment
      */
-    public function setEnchantment(Enchantment $enchantment)
+    public function setEnchantment(Enchantment $enchantment): void
     {
         $this->enchantment = $enchantment;
     }
@@ -54,7 +54,7 @@ class ShopSignTile extends Sign
     /**
      * @param int $level
      */
-    public function setEnchantmentLevel(int $level)
+    public function setEnchantmentLevel(int $level): void
     {
         $this->enchantmentLevel = $level;
     }
@@ -70,7 +70,7 @@ class ShopSignTile extends Sign
     /**
      * @param int $price
      */
-    public function setPrice(int $price)
+    public function setPrice(int $price): void
     {
         $this->price = $price;
     }

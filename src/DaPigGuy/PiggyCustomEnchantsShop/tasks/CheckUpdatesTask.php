@@ -31,7 +31,7 @@ class CheckUpdatesTask extends AsyncTask
         $this->api = $api;
     }
 
-    public function onRun()
+    public function onRun(): void
     {
         $releases = Internet::getURL("https://poggit.pmmp.io/releases.json?name=PiggyCustomEnchantsShop");
         if ($releases !== null) {
@@ -47,7 +47,7 @@ class CheckUpdatesTask extends AsyncTask
     /**
      * @param Server $server
      */
-    public function onCompletion(Server $server)
+    public function onCompletion(Server $server): void
     {
         if ($this->getResult() !== null) {
             $plugin = $server->getPluginManager()->getPlugin("PiggyCustomEnchantsShop");

@@ -29,7 +29,7 @@ class PiggyCustomEnchantsShop extends PluginBase
     /**
      * @throws ReflectionException
      */
-    public function onEnable()
+    public function onEnable(): void
     {
         $this->saveDefaultConfig();
         if (!$this->checkDependencies()) {
