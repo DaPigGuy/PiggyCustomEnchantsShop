@@ -8,7 +8,7 @@ use DaPigGuy\PiggyCustomEnchantsShop\commands\CustomEnchantShopCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\economy\EconomyProvider;
 use DaPigGuy\PiggyCustomEnchantsShop\economy\EconomySProvider;
 use DaPigGuy\PiggyCustomEnchantsShop\economy\XPProvider;
-use DaPigGuy\PiggyCustomEnchantsShop\Shops\UIShopsManager;
+use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
 use pocketmine\plugin\PluginBase;
 use pocketmine\tile\Tile;

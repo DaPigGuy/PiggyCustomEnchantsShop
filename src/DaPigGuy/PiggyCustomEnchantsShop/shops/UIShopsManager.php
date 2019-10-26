@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DaPigGuy\PiggyCustomEnchantsShop\Shops;
+namespace DaPigGuy\PiggyCustomEnchantsShop\shops;
 
 use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
@@ -10,7 +10,7 @@ use pocketmine\utils\Config;
 
 /**
  * Class UIShopsManager
- * @package DaPigGuy\PiggyCustomEnchantsShop\Shops
+ * @package DaPigGuy\PiggyCustomEnchantsShop\shops
  */
 class UIShopsManager
 {
