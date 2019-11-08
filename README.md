@@ -1,4 +1,4 @@
-# PiggyCustomEnchantsShop [![Poggit-CI](https://poggit.pmmp.io/ci.badge/DaPigGuy/PiggyCustomEnchantsShop/PiggyCustomEnchantsShop/master)](https://poggit.pmmp.io/ci/DaPigGuy/PiggyCustomEnchants/~)
+# PiggyCustomEnchantsShop [![Poggit-CI](https://poggit.pmmp.io/ci.badge/DaPigGuy/PiggyCustomEnchantsShop/PiggyCustomEnchantsShop/master)](https://poggit.pmmp.io/ci/DaPigGuy/PiggyCustomEnchantsShop/~)
 
 PiggyCustomEnchantsShop is an add-on the the PiggyCustomEnchants plugin, adding shops.<br>
 You can either use SignShops or UIShops, which uses [libFormAPI](https://github.com/jojoe77777/FormAPI).

@@ -1,29 +1,35 @@
 name: PiggyCustomEnchantsShop
-main: DaPigGuy\PiggyCustomEnchantsShop\Main
-version: 1.2.2
+main: DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop
+version: 1.3.0
 api: 3.2.0
 load: POSTWORLD
 author: DaPigGuy
+depend: ["PiggyCustomEnchants"]
+softdepend: ["EconomyAPI"]
 permissions:
   piggycustomenchantsshop:
     default: op
     description: "Use everything in PiggyCustomEnchantsShop"
     children:
-      piggycustomenchantsshop.breaksign:
+      piggycustomenchantsshop.sign:
+        description: "Use all sign related permissions"
         default: op
-        descriptiom: "Break CE shop signs"
-      piggycustomenchantsshop.makesign:
-        default: op
-        description: "Make CE shop signs"
-      piggycustomenchantsshop.usesign:
-        default: true
-        description: "Use CE shop signs"
+        children:
+          piggycustomenchantsshop.sign.break:
+            default: op
+            descriptiom: "Break CE shop signs"
+          piggycustomenchantsshop.sign.create:
+            default: op
+            description: "Create CE shop signs"
+          piggycustomenchantsshop.sign.use:
+            default: true
+            description: "Use CE shop signs"
       piggycustomenchantsshop.command:
-        default: false
+        default: op
         description: "Use all PiggyCustomEnchantsShop commands"
         children:
           piggycustomenchantsshop.command.ceshop:
-            default: false
+            default: op
             description: "Use /ceshop"
             children:
               piggycustomenchantsshop.command.ceshop.add:
