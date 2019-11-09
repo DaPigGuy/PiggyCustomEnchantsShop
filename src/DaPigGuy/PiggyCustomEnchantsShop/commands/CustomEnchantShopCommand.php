@@ -57,6 +57,10 @@ class CustomEnchantShopCommand extends BaseCommand
     public function sendEnchantsForm(Player $player): void
     {
         $shops = $this->plugin->getUIShopManager()->getShops();
+        if (count($shops) === 0) {
+            $player->sendMessage(TextFormat::RED . "There are no existing shop entries.");
+            return;
+        }
         $form = new SimpleForm(function (Player $player, ?int $data) use ($shops) {
             if ($data !== null) {
                 $selectedShop = $shops[array_keys($shops)[$data]];
