@@ -50,10 +50,6 @@ class PiggyCustomEnchantsShop extends PluginBase
      */
     public function checkDependencies(): bool
     {
-        if ($this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants") === null) {
-            $this->getLogger()->error("PiggyCustomEnchants is required.");
-            return false;
-        }
         switch ($this->getConfig()->getNested("economy.provider")) {
             case "xp":
                 $this->economyProvider = new XPProvider();
