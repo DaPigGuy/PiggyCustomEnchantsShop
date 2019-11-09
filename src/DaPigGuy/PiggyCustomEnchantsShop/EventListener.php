@@ -122,7 +122,7 @@ class EventListener implements Listener
                     return;
                 }
                 if (($enchantment = CustomEnchantManager::getEnchantmentByName($lines[1])) === null) {
-                    if (is_numeric($lines[1]) && ($enchantment = CustomEnchantManager::getEnchantment($lines[1])) !== null) {
+                    if (is_numeric($lines[1]) && ($enchantment = CustomEnchantManager::getEnchantment((int)$lines[1])) !== null) {
                         $event->setLine(1, $enchantment->getName());
                     } else {
                         $event->setLine(1, TextFormat::RED . "Invalid enchantment.");
