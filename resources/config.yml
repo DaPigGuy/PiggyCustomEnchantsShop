@@ -1,5 +1,7 @@
 economy:
   provider: EconomyS
+  # This is used for the MultiEconomy provider
+  multieconomy-currency: ""
   currency-format: "${amount}"
 shop-types:
   sign:

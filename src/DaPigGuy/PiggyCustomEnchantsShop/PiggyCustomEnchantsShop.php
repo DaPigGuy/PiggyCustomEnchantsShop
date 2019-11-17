@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
+use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
+use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
+use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
+use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\PiggyCustomEnchantsShop\commands\CustomEnchantShopCommand;
-use DaPigGuy\PiggyCustomEnchantsShop\economy\EconomyProvider;
-use DaPigGuy\PiggyCustomEnchantsShop\economy\EconomySProvider;
-use DaPigGuy\PiggyCustomEnchantsShop\economy\XPProvider;
 use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
 use pocketmine\plugin\PluginBase;
@@ -28,14 +29,16 @@ class PiggyCustomEnchantsShop extends PluginBase
 
     /**
      * @throws ReflectionException
+     * @throws MissingProviderDependencyException
+     * @throws UnknownProviderException
      */
     public function onEnable(): void
     {
         $this->saveDefaultConfig();
-        if (!$this->checkDependencies()) {
-            $this->getServer()->getPluginManager()->disablePlugin($this);
-            return;
-        }
+
+        libPiggyEconomy::init();
+        $this->economyProvider = libPiggyEconomy::getProvider($this->getConfig()->get("economy"));
+
         if ($this->getConfig()->getNested("shop-types.ui")) {
             $this->uiShopManager = new UIShopsManager($this);
             $this->uiShopManager->initShops();
@@ -43,26 +46,6 @@ class PiggyCustomEnchantsShop extends PluginBase
         }
         Tile::registerTile(ShopSignTile::class);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-    }
-
-    /**
-     * @return bool
-     */
-    public function checkDependencies(): bool
-    {
-        switch ($this->getConfig()->getNested("economy.provider")) {
-            case "xp":
-                $this->economyProvider = new XPProvider();
-                break;
-            default:
-            case "EconomyS":
-                if ($this->getServer()->getPluginManager()->getPlugin("EconomyAPI") === null) {
-                    $this->getLogger()->error("EconomyAPI is required for your selected economy provider.");
-                    return false;
-                }
-                $this->economyProvider = new EconomySProvider();
-        }
-        return true;
     }
 
     /**
