@@ -8,7 +8,7 @@ use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
 use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
-use DaPigGuy\PiggyCustomEnchants\tasks\CheckUpdatesTask;
+use DaPigGuy\PiggyCustomEnchantsShop\tasks\CheckUpdatesTask;
 use DaPigGuy\PiggyCustomEnchantsShop\commands\CustomEnchantShopCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
