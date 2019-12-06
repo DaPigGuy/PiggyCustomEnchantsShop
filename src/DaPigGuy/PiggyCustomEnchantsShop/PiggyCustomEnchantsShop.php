@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
+use CortexPE\Commando\BaseCommand;
 use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
 use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
@@ -12,6 +13,7 @@ use DaPigGuy\PiggyCustomEnchantsShop\commands\CustomEnchantShopCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\tasks\CheckUpdatesTask;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
+use jojoe77777\FormAPI\Form;
 use pocketmine\plugin\PluginBase;
 use pocketmine\tile\Tile;
 use ReflectionException;
@@ -35,6 +37,22 @@ class PiggyCustomEnchantsShop extends PluginBase
      */
     public function onEnable(): void
     {
+        if (!class_exists(BaseCommand::class)) {
+            $this->getLogger()->error("Commando virion not found. Please download PiggyCustomEnchantsShop from Poggit-CI or use DEVirion (not recommended).");
+            $this->getServer()->getPluginManager()->disablePlugin($this);
+            return;
+        }
+        if (!class_exists(Form::class)) {
+            $this->getLogger()->error("libformapi virion not found. Please download PiggyCustomEnchantsShop from Poggit-CI or use DEVirion (not recommended).");
+            $this->getServer()->getPluginManager()->disablePlugin($this);
+            return;
+        }
+        if (!class_exists(libPiggyEconomy::class)) {
+            $this->getLogger()->error("libPiggyEconomy virion not found. Please download PiggyCustomEnchantsShop from Poggit-CI or use DEVirion (not recommended).");
+            $this->getServer()->getPluginManager()->disablePlugin($this);
+            return;
+        }
+
         $this->saveDefaultConfig();
 
         libPiggyEconomy::init();
