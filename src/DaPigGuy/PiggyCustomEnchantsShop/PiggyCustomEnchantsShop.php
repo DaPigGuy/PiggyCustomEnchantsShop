@@ -14,8 +14,10 @@ use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\tasks\CheckUpdatesTask;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
 use jojoe77777\FormAPI\Form;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\plugin\PluginBase;
 use pocketmine\tile\Tile;
+use ReflectionClass;
 use ReflectionException;
 
 /**
@@ -29,6 +31,9 @@ class PiggyCustomEnchantsShop extends PluginBase
 
     /** @var UIShopsManager */
     public $uiShopManager = null;
+
+    /** @var array */
+    public static $vanillaEnchantmentNames = [];
 
     /**
      * @throws ReflectionException
@@ -51,6 +56,17 @@ class PiggyCustomEnchantsShop extends PluginBase
             $this->getLogger()->error("libPiggyEconomy virion not found. Please download PiggyCustomEnchantsShop from Poggit-CI or use DEVirion (not recommended).");
             $this->getServer()->getPluginManager()->disablePlugin($this);
             return;
+        }
+
+        $reflection = new ReflectionClass(Enchantment::class);
+        $lastEnchantmentId = -1;
+        foreach ($reflection->getConstants() as $name => $id) {
+            $lastEnchantmentId++;
+            if ($id !== $lastEnchantmentId) break;
+            $enchantment = Enchantment::getEnchantment($id);
+            if ($enchantment instanceof Enchantment) {
+                self::$vanillaEnchantmentNames[$enchantment->getName()] = ucwords(strtolower(str_replace("_", " ", $name)));
+            }
         }
 
         $this->saveDefaultConfig();

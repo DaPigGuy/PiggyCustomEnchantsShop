@@ -154,8 +154,7 @@ class EventListener implements Listener
                     $newTile = Tile::createTile("ShopSignTile", $event->getBlock()->getLevel(), $nbt);
                     $tile->close();
                 }
-                $enchantmentName = $enchantment->getName();
-                if ($enchantmentName[0] === "%") $enchantmentName = ucwords(strtolower(str_replace("_", " ", $lines[1])));
+                $enchantmentName = PiggyCustomEnchantsShop::$vanillaEnchantmentNames[$enchantment->getName()] ?? $enchantment->getName();
                 $newTile->setLine(0, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, $enchantmentName, $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-one")));
                 $newTile->setLine(1, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, $enchantmentName, $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-two")));
                 $newTile->setLine(2, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, $enchantmentName, $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-three")));

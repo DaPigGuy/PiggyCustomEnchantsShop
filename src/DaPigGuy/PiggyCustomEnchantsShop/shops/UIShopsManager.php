@@ -48,7 +48,7 @@ class UIShopsManager
     public function addShop(UIShop $shop): void
     {
         $key = "id:" . $shop->getId();
-        $this->file->setNested($key, [$shop->getEnchantment()->getName(), $shop->getEnchantmentLevel(), $shop->getPrice()]);
+        $this->file->setNested($key, [str_replace(" ", "_", PiggyCustomEnchantsShop::$vanillaEnchantmentNames[$shop->getEnchantment()->getName()] ?? $shop->getEnchantment()->getName()), $shop->getEnchantmentLevel(), $shop->getPrice()]);
         $this->file->save();
         $this->shops[$key] = $shop;
     }
