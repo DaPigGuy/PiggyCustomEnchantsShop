@@ -10,6 +10,7 @@ use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
 use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShop;
 use jojoe77777\FormAPI\CustomForm;
 use pocketmine\command\CommandSender;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
@@ -43,7 +44,11 @@ class AddSubCommand extends BaseSubCommand
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         if (count($args) >= 3) {
-            if (($enchantment = CustomEnchantManager::getEnchantmentByName($args["enchantment"])) === null && ($enchantment = CustomEnchantManager::getEnchantment((int)$args["enchantment"])) === null) {
+            if (
+                ($enchantment = CustomEnchantManager::getEnchantmentByName($args["enchantment"])) === null &&
+                ($enchantment = Enchantment::getEnchantmentByName($args["enchantment"])) === null &&
+                (!is_numeric($args["enchantment"]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$args["enchantment"])) === null && ($enchantment = Enchantment::getEnchantment((int)$args["enchantment"])) === null))
+            ) {
                 $sender->sendMessage(TextFormat::RED . "Invalid enchantment.");
                 return;
             }
@@ -55,13 +60,17 @@ class AddSubCommand extends BaseSubCommand
                 $sender->sendMessage(TextFormat::RED . "Price must be numerical.");
                 return;
             }
-            $this->plugin->getUIShopManager()->addShop(new UIShop($this->plugin->getUIShopManager()->getNextId(), CustomEnchantManager::getEnchantmentByName($args["enchantment"]) ?? CustomEnchantManager::getEnchantment((int)$args["enchantment"]), (int)$args["level"], (int)$args["price"]));
+            $this->plugin->getUIShopManager()->addShop(new UIShop($this->plugin->getUIShopManager()->getNextId(), CustomEnchantManager::getEnchantmentByName($args["enchantment"]) ?? CustomEnchantManager::getEnchantment((int)$args["enchantment"]) ?? Enchantment::getEnchantmentByName($args["enchantment"]) ?? Enchantment::getEnchantment((int)$args["enchantment"]), (int)$args["level"], (int)$args["price"]));
             $sender->sendMessage(TextFormat::GREEN . "Shop entry has been created.");
         } else {
             if ($sender instanceof Player) {
                 $form = new CustomForm(function (Player $player, ?array $data): void {
                     if ($data !== null) {
-                        if (($enchantment = CustomEnchantManager::getEnchantmentByName($data[0])) === null && ($enchantment = CustomEnchantManager::getEnchantment((int)$data[0])) === null) {
+                        if (
+                            ($enchantment = CustomEnchantManager::getEnchantmentByName($data[0])) === null &&
+                            ($enchantment = Enchantment::getEnchantmentByName($data[0])) === null &&
+                            (!is_numeric($data[0]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$data[0])) === null && ($enchantment = Enchantment::getEnchantment((int)$data[0])) === null))
+                        ) {
                             $player->sendMessage(TextFormat::RED . "Invalid enchantment.");
                             return;
                         }
@@ -73,7 +82,7 @@ class AddSubCommand extends BaseSubCommand
                             $player->sendMessage(TextFormat::RED . "Price must be numerical.");
                             return;
                         }
-                        $this->plugin->getUIShopManager()->addShop(new UIShop($this->plugin->getUIShopManager()->getNextId(), CustomEnchantManager::getEnchantmentByName($data[0]) ?? CustomEnchantManager::getEnchantment((int)$data[0]), (int)$data[1], (int)$data[2]));
+                        $this->plugin->getUIShopManager()->addShop(new UIShop($this->plugin->getUIShopManager()->getNextId(), CustomEnchantManager::getEnchantmentByName($data[0]) ?? CustomEnchantManager::getEnchantment((int)$data[0]) ?? Enchantment::getEnchantmentByName($data[0]) ?? Enchantment::getEnchantment((int)$data[0]), (int)$data[1], (int)$data[2]));
                         $player->sendMessage(TextFormat::GREEN . "Shop entry has been created.");
 
                     }

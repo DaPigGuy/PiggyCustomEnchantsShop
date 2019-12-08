@@ -10,6 +10,7 @@ use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\SignChangeEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\tile\Sign;
 use pocketmine\tile\Tile;
 use pocketmine\utils\Config;
@@ -121,8 +122,8 @@ class EventListener implements Listener
                     if ($tile instanceof ShopSignTile) $event->setCancelled();
                     return;
                 }
-                if (($enchantment = CustomEnchantManager::getEnchantmentByName($lines[1])) === null) {
-                    if (is_numeric($lines[1]) && ($enchantment = CustomEnchantManager::getEnchantment((int)$lines[1])) !== null) {
+                if (($enchantment = CustomEnchantManager::getEnchantmentByName($lines[1])) === null && ($enchantment = Enchantment::getEnchantmentByName($lines[1])) === null) {
+                    if (is_numeric($lines[1]) && (($enchantment = CustomEnchantManager::getEnchantment((int)$lines[1])) !== null || ($enchantment = Enchantment::getEnchantment((int)$lines[1])) !== null)) {
                         $event->setLine(1, $enchantment->getName());
                     } else {
                         $event->setLine(1, TextFormat::RED . "Invalid enchantment.");
