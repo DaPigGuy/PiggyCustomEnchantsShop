@@ -154,10 +154,12 @@ class EventListener implements Listener
                     $newTile = Tile::createTile("ShopSignTile", $event->getBlock()->getLevel(), $nbt);
                     $tile->close();
                 }
-                $newTile->setLine(0, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-one")));
-                $newTile->setLine(1, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-two")));
-                $newTile->setLine(2, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-three")));
-                $newTile->setLine(3, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-four")));
+                $enchantmentName = $enchantment->getName();
+                if ($enchantmentName[0] === "%") $enchantmentName = ucwords(strtolower(str_replace("_", " ", $lines[1])));
+                $newTile->setLine(0, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, $enchantmentName, $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-one")));
+                $newTile->setLine(1, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, $enchantmentName, $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-two")));
+                $newTile->setLine(2, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, $enchantmentName, $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-three")));
+                $newTile->setLine(3, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, $enchantmentName, $lines[2], $lines[3]], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-four")));
 
                 $newTile->setEnchantment($enchantment);
                 $newTile->setEnchantmentLevel((int)$lines[2]);
