@@ -6,6 +6,7 @@ load: POSTWORLD
 author: DaPigGuy
 depend: ["PiggyCustomEnchants"]
 softdepend: ["EconomyAPI"]
+website: "https://github.com/DaPigGuy/PiggyCustomEnchantsShop/"
 permissions:
   piggycustomenchantsshop:
     default: op
