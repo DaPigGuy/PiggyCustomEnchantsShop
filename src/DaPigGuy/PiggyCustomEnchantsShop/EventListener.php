@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
 use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
+use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\SignChangeEvent;
@@ -67,8 +68,8 @@ class EventListener implements Listener
         $tile = $level->getTile($block);
         if ($tile instanceof ShopSignTile) {
             if ($player->hasPermission("piggycustomenchantsshop.sign.use")) return;
-            if (($enchant = $tile->getEnchantment()) === null) {
-                $player->sendMessage(TextFormat::RED . "Shop sign using invalid enchantment.");
+            if (($enchant = $tile->getEnchantment()) instanceof PlaceholderEnchant) {
+                $player->sendMessage(TextFormat::RED . "Shop sign using invalid or unregistered enchantment.");
                 return;
             }
             if ($this->plugin->getEconomyProvider()->getMoney($player) < $tile->getPrice()) {

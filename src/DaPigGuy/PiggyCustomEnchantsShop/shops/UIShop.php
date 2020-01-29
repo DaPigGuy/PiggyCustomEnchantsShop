@@ -15,7 +15,7 @@ class UIShop
     /** @var int */
     private $id;
 
-    /** @var Enchantment|null */
+    /** @var Enchantment */
     private $enchantment;
     /** @var int */
     private $enchantmentLevel;
@@ -25,11 +25,11 @@ class UIShop
     /**
      * UIShop constructor.
      * @param int $id
-     * @param Enchantment|null $enchantment
+     * @param Enchantment $enchantment
      * @param int $enchantmentLevel
      * @param int $price
      */
-    public function __construct(int $id, ?Enchantment $enchantment, int $enchantmentLevel, int $price)
+    public function __construct(int $id, Enchantment $enchantment, int $enchantmentLevel, int $price)
     {
         $this->id = $id;
         $this->enchantment = $enchantment;
@@ -46,9 +46,9 @@ class UIShop
     }
 
     /**
-     * @return Enchantment|null
+     * @return Enchantment
      */
-    public function getEnchantment(): ?Enchantment
+    public function getEnchantment(): Enchantment
     {
         return $this->enchantment;
     }

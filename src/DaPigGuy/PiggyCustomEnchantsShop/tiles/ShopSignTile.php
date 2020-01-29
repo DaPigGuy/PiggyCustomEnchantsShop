@@ -6,6 +6,7 @@ namespace DaPigGuy\PiggyCustomEnchantsShop\tiles;
 
 use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
 use DaPigGuy\PiggyCustomEnchants\utils\Utils;
+use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\enchantment\EnchantmentInstance;
@@ -20,7 +21,7 @@ use pocketmine\utils\TextFormat;
  */
 class ShopSignTile extends Sign
 {
-    /** @var Enchantment|null */
+    /** @var Enchantment */
     public $enchantment;
     /** @var int */
     public $enchantmentLevel = 1;
@@ -28,9 +29,9 @@ class ShopSignTile extends Sign
     public $price = 1;
 
     /**
-     * @return Enchantment|null
+     * @return Enchantment
      */
-    public function getEnchantment(): ?Enchantment
+    public function getEnchantment(): Enchantment
     {
         return $this->enchantment;
     }
@@ -81,7 +82,7 @@ class ShopSignTile extends Sign
      */
     public function purchaseItem(PiggyCustomEnchantsShop $plugin, Player $player): void
     {
-        if (($enchant = $this->getEnchantment()) === null) return;
+        if (($enchant = $this->getEnchantment()) instanceof PlaceholderEnchant) return;
         if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $enchant, $this->getEnchantmentLevel())) {
             $plugin->getEconomyProvider()->takeMoney($player, $this->getPrice());
             $item = $player->getInventory()->getItemInHand();
@@ -99,7 +100,7 @@ class ShopSignTile extends Sign
     protected function readSaveData(CompoundTag $nbt): void
     {
         parent::readSaveData($nbt);
-        $this->enchantment = CustomEnchantManager::getEnchantment($nbt->getInt("Enchantment")) ?? Enchantment::getEnchantment($nbt->getInt("Enchantment"));
+        $this->enchantment = CustomEnchantManager::getEnchantment($nbt->getInt("Enchantment")) ?? (Enchantment::getEnchantment($nbt->getInt("Enchantment")) ?? new PlaceholderEnchant($nbt->getInt("Enchantment")));
         $this->enchantmentLevel = $nbt->getInt("EnchantmentLevel");
         $this->price = $nbt->getInt("Price");
 

@@ -7,7 +7,9 @@ use CortexPE\Commando\BaseCommand;
 use CortexPE\Commando\exception\SubCommandCollision;
 use DaPigGuy\PiggyCustomEnchants\utils\Utils;
 use DaPigGuy\PiggyCustomEnchantsShop\commands\subcommands\AddSubCommand;
+use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
+use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShop;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
@@ -56,7 +58,9 @@ class CustomEnchantShopCommand extends BaseCommand
      */
     public function sendEnchantsForm(Player $player): void
     {
-        $shops = $this->plugin->getUIShopManager()->getShops();
+        $shops = array_filter($this->plugin->getUIShopManager()->getShops(), function (UIShop $shop) {
+            return !$shop->getEnchantment() instanceof PlaceholderEnchant;
+        });
         if (count($shops) === 0) {
             $player->sendMessage(TextFormat::RED . "There are no existing shop entries.");
             return;
