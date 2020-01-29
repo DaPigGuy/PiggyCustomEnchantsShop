@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaPigGuy\PiggyCustomEnchantsShop\shops;
 
 use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
+use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\utils\Config;
@@ -38,7 +39,7 @@ class UIShopsManager
     public function initShops(): void
     {
         foreach ($this->file->getAll() as $key => $value) {
-            $this->shops[$key] = new UIShop((int)str_replace("id:", "", $key), CustomEnchantManager::getEnchantmentByName($value[0]) ?? Enchantment::getEnchantmentByName($value[0]), $value[1], $value[2]);
+            $this->shops[$key] = new UIShop((int)str_replace("id:", "", $key), CustomEnchantManager::getEnchantmentByName($value[0]) ?? Enchantment::getEnchantmentByName($value[0]) ?? new PlaceholderEnchant(0, $value[0]), $value[1], $value[2]);
         }
     }
 

@@ -7,7 +7,10 @@ use CortexPE\Commando\BaseCommand;
 use CortexPE\Commando\exception\SubCommandCollision;
 use DaPigGuy\PiggyCustomEnchants\utils\Utils;
 use DaPigGuy\PiggyCustomEnchantsShop\commands\subcommands\AddSubCommand;
+use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
+use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShop;
+use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
@@ -56,7 +59,11 @@ class CustomEnchantShopCommand extends BaseCommand
      */
     public function sendEnchantsForm(Player $player): void
     {
-        $shops = $this->plugin->getUIShopManager()->getShops();
+        /** @var UIShopsManager $shopManager */
+        $shopManager = $this->plugin->getUIShopManager();
+        $shops = array_filter($shopManager->getShops(), function (UIShop $shop) {
+            return !$shop->getEnchantment() instanceof PlaceholderEnchant;
+        });
         if (count($shops) === 0) {
             $player->sendMessage(TextFormat::RED . "There are no existing shop entries.");
             return;
@@ -68,6 +75,10 @@ class CustomEnchantShopCommand extends BaseCommand
                     if ($data !== null) {
                         if ($data) {
                             if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel())) {
+                                if ($this->plugin->getEconomyProvider()->getMoney($player) < $selectedShop->getPrice()) {
+                                    $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", (string)($selectedShop->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player)), $this->plugin->getConfig()->getNested("economy.currency-format")) . " more.");
+                                    return;
+                                }
                                 $this->plugin->getEconomyProvider()->takeMoney($player, $selectedShop->getPrice());
                                 $item = $player->getInventory()->getItemInHand();
                                 $item->addEnchantment(new EnchantmentInstance($selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel()));
