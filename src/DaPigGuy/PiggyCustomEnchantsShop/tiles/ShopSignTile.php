@@ -100,7 +100,7 @@ class ShopSignTile extends Sign
     protected function readSaveData(CompoundTag $nbt): void
     {
         parent::readSaveData($nbt);
-        $this->enchantment = CustomEnchantManager::getEnchantment($nbt->getInt("Enchantment")) ?? (Enchantment::getEnchantment($nbt->getInt("Enchantment")) ?? new PlaceholderEnchant($nbt->getInt("Enchantment")));
+        $this->enchantment = CustomEnchantManager::getEnchantment($nbt->getInt("Enchantment")) ?? Enchantment::getEnchantment($nbt->getInt("Enchantment")) ?? new PlaceholderEnchant($nbt->getInt("Enchantment"));
         $this->enchantmentLevel = $nbt->getInt("EnchantmentLevel");
         $this->price = $nbt->getInt("Price");
 
