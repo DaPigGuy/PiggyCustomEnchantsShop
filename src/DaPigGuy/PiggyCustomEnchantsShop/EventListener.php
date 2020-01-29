@@ -95,22 +95,26 @@ class EventListener implements Listener
              */
             if (file_exists($this->plugin->getDataFolder() . "signs/shops.yml")) {
                 $oldSignShops = new Config($this->plugin->getDataFolder() . "signs/shops.yml");
-                if ($oldSignShops->exists($tile->x . "," . $tile->y . "," . $tile->z . "," . $tile->getLevel()->getName())) {
+                if ($oldSignShops->exists($tile->x . "," . $tile->y . "," . $tile->z . "," . $level->getName())) {
                     $enchantment = CustomEnchantManager::getEnchantmentByName($lines[1]);
-                    $level = (int)str_replace("Level: ", "", $lines[2]);
+                    if ($enchantment === null) {
+                        $player->sendMessage(TextFormat::RED . "Could not convert legacy sign; enchantment not found.");
+                        return;
+                    }
+                    $enchantmentLevel = (int)str_replace("Level: ", "", $lines[2]);
                     $price = (int)str_replace("Price: ", "", $lines[3]);
 
                     $nbt = $tile->getSpawnCompound();
                     $nbt->setInt("Enchantment", $enchantment->getId());
-                    $nbt->setInt("EnchantmentLevel", $level);
+                    $nbt->setInt("EnchantmentLevel", $enchantmentLevel);
                     $nbt->setInt("Price", $price);
 
                     /** @var ShopSignTile $newTile */
                     $newTile = Tile::createTile("ShopSignTile", $event->getBlock()->getLevel(), $nbt);
-                    $newTile->setLine(0, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $level, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-one")));
-                    $newTile->setLine(1, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $level, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-two")));
-                    $newTile->setLine(2, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $level, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-three")));
-                    $newTile->setLine(3, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $level, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-four")));
+                    $newTile->setLine(0, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-one")));
+                    $newTile->setLine(1, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-two")));
+                    $newTile->setLine(2, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-three")));
+                    $newTile->setLine(3, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-four")));
                     $tile->close();
                 }
             }
@@ -123,8 +127,10 @@ class EventListener implements Listener
     public function onSignChange(SignChangeEvent $event): void
     {
         $player = $event->getPlayer();
+        /** @var Level $level */
+        $level = $event->getBlock()->getLevel();
         /** @var Sign $tile */
-        $tile = $event->getBlock()->getLevel()->getTile($event->getBlock());
+        $tile = $level->getTile($event->getBlock());
         $lines = $event->getLines();
         if ($this->plugin->getConfig()->getNested("shop-types.sign.enabled")) {
             if ($lines[0] === "ce" || $lines[0] === "[CE]") {
@@ -162,7 +168,7 @@ class EventListener implements Listener
                     $nbt->setInt("Price", (int)$lines[3]);
 
                     /** @var ShopSignTile $newTile */
-                    $newTile = Tile::createTile("ShopSignTile", $event->getBlock()->getLevel(), $nbt);
+                    $newTile = Tile::createTile("ShopSignTile", $level, $nbt);
                     $tile->close();
                 }
                 $enchantmentName = PiggyCustomEnchantsShop::$vanillaEnchantmentNames[$enchantment->getName()] ?? $enchantment->getName();
