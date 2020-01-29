@@ -67,7 +67,7 @@ class EventListener implements Listener
         $level = $block->getLevel();
         $tile = $level->getTile($block);
         if ($tile instanceof ShopSignTile) {
-            if ($player->hasPermission("piggycustomenchantsshop.sign.use")) return;
+            if (!$player->hasPermission("piggycustomenchantsshop.sign.use")) return;
             if (($enchant = $tile->getEnchantment()) instanceof PlaceholderEnchant) {
                 $player->sendMessage(TextFormat::RED . "Shop sign using invalid or unregistered enchantment.");
                 return;

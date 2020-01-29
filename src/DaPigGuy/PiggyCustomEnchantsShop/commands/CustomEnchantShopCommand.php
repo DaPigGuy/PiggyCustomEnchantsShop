@@ -75,6 +75,10 @@ class CustomEnchantShopCommand extends BaseCommand
                     if ($data !== null) {
                         if ($data) {
                             if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel())) {
+                                if ($this->plugin->getEconomyProvider()->getMoney($player) < $selectedShop->getPrice()) {
+                                    $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", (string)($selectedShop->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player)), $this->plugin->getConfig()->getNested("economy.currency-format")) . " more.");
+                                    return;
+                                }
                                 $this->plugin->getEconomyProvider()->takeMoney($player, $selectedShop->getPrice());
                                 $item = $player->getInventory()->getItemInHand();
                                 $item->addEnchantment(new EnchantmentInstance($selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel()));
