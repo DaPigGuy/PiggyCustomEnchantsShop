@@ -20,7 +20,7 @@ use pocketmine\utils\TextFormat;
  */
 class ShopSignTile extends Sign
 {
-    /** @var Enchantment */
+    /** @var Enchantment|null */
     public $enchantment;
     /** @var int */
     public $enchantmentLevel = 1;
@@ -28,9 +28,9 @@ class ShopSignTile extends Sign
     public $price = 1;
 
     /**
-     * @return Enchantment
+     * @return Enchantment|null
      */
-    public function getEnchantment(): Enchantment
+    public function getEnchantment(): ?Enchantment
     {
         return $this->enchantment;
     }
