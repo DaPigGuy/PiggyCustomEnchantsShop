@@ -8,6 +8,7 @@ use CortexPE\Commando\exception\ArgumentOrderException;
 use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
 use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShop;
+use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use jojoe77777\FormAPI\CustomForm;
 use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\Enchantment;
@@ -43,6 +44,7 @@ class AddSubCommand extends BaseSubCommand
      */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
+        /** @var UIShopsManager $shopManager */
         $shopManager = $this->plugin->getUIShopManager();
         if (count($args) >= 3) {
             if (
