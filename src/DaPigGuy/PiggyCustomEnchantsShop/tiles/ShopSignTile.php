@@ -20,7 +20,7 @@ use pocketmine\utils\TextFormat;
  */
 class ShopSignTile extends Sign
 {
-    /** @var Enchantment|null */
+    /** @var Enchantment */
     public $enchantment;
     /** @var int */
     public $enchantmentLevel = 1;
@@ -28,9 +28,9 @@ class ShopSignTile extends Sign
     public $price = 1;
 
     /**
-     * @return Enchantment|null
+     * @return Enchantment
      */
-    public function getEnchantment(): ?Enchantment
+    public function getEnchantment(): Enchantment
     {
         return $this->enchantment;
     }
@@ -81,10 +81,11 @@ class ShopSignTile extends Sign
      */
     public function purchaseItem(PiggyCustomEnchantsShop $plugin, Player $player): void
     {
-        if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $this->getEnchantment(), $this->getEnchantmentLevel())) {
+        if (($enchant = $this->getEnchantment()) === null) return;
+        if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $enchant, $this->getEnchantmentLevel())) {
             $plugin->getEconomyProvider()->takeMoney($player, $this->getPrice());
             $item = $player->getInventory()->getItemInHand();
-            $item->addEnchantment(new EnchantmentInstance($this->getEnchantment(), $this->getEnchantmentLevel()));
+            $item->addEnchantment(new EnchantmentInstance($enchant, $this->getEnchantmentLevel()));
             $player->getInventory()->setItemInHand($item);
             $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
             return;
