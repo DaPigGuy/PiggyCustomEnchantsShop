@@ -43,6 +43,7 @@ class AddSubCommand extends BaseSubCommand
      */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
+        $shopManager = $this->plugin->getUIShopManager();
         if (count($args) >= 3) {
             if (
                 ($enchantment = CustomEnchantManager::getEnchantmentByName($args["enchantment"])) === null &&
@@ -60,11 +61,11 @@ class AddSubCommand extends BaseSubCommand
                 $sender->sendMessage(TextFormat::RED . "Price must be numerical.");
                 return;
             }
-            $this->plugin->getUIShopManager()->addShop(new UIShop($this->plugin->getUIShopManager()->getNextId(), CustomEnchantManager::getEnchantmentByName($args["enchantment"]) ?? CustomEnchantManager::getEnchantment((int)$args["enchantment"]) ?? Enchantment::getEnchantmentByName($args["enchantment"]) ?? Enchantment::getEnchantment((int)$args["enchantment"]), (int)$args["level"], (int)$args["price"]));
+            $shopManager->addShop(new UIShop($shopManager->getNextId(), $enchantment, (int)$args["level"], (int)$args["price"]));
             $sender->sendMessage(TextFormat::GREEN . "Shop entry has been created.");
         } else {
             if ($sender instanceof Player) {
-                $form = new CustomForm(function (Player $player, ?array $data): void {
+                $form = new CustomForm(function (Player $player, ?array $data) use ($shopManager): void {
                     if ($data !== null) {
                         if (
                             ($enchantment = CustomEnchantManager::getEnchantmentByName($data[0])) === null &&
@@ -82,7 +83,7 @@ class AddSubCommand extends BaseSubCommand
                             $player->sendMessage(TextFormat::RED . "Price must be numerical.");
                             return;
                         }
-                        $this->plugin->getUIShopManager()->addShop(new UIShop($this->plugin->getUIShopManager()->getNextId(), CustomEnchantManager::getEnchantmentByName($data[0]) ?? CustomEnchantManager::getEnchantment((int)$data[0]) ?? Enchantment::getEnchantmentByName($data[0]) ?? Enchantment::getEnchantment((int)$data[0]), (int)$data[1], (int)$data[2]));
+                        $shopManager->addShop(new UIShop($shopManager->getNextId(), $enchantment, (int)$data[1], (int)$data[2]));
                         $player->sendMessage(TextFormat::GREEN . "Shop entry has been created.");
 
                     }

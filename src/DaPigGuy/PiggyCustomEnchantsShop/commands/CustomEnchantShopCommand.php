@@ -10,6 +10,7 @@ use DaPigGuy\PiggyCustomEnchantsShop\commands\subcommands\AddSubCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
 use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShop;
+use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
@@ -58,7 +59,9 @@ class CustomEnchantShopCommand extends BaseCommand
      */
     public function sendEnchantsForm(Player $player): void
     {
-        $shops = array_filter($this->plugin->getUIShopManager()->getShops(), function (UIShop $shop) {
+        /** @var UIShopsManager $shopManager */
+        $shopManager = $this->plugin->getUIShopManager();
+        $shops = array_filter($shopManager->getShops(), function (UIShop $shop) {
             return !$shop->getEnchantment() instanceof PlaceholderEnchant;
         });
         if (count($shops) === 0) {
