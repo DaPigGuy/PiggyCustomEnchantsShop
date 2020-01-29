@@ -110,7 +110,7 @@ class EventListener implements Listener
                     $nbt->setInt("Price", $price);
 
                     /** @var ShopSignTile $newTile */
-                    $newTile = Tile::createTile("ShopSignTile", $event->getBlock()->getLevel(), $nbt);
+                    $newTile = Tile::createTile("ShopSignTile", $level, $nbt);
                     $newTile->setLine(0, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-one")));
                     $newTile->setLine(1, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-two")));
                     $newTile->setLine(2, str_replace(["&", "{enchantment}", "{level}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-three")));
