@@ -82,7 +82,7 @@ class CustomEnchantShopCommand extends BaseCommand
                     }
                 });
                 $form->setTitle(TextFormat::GREEN . "Purchase Confirmation");
-                $form->setContent("Are you sure you would like to buy the enchantment " . $selectedShop->getEnchantment()->getName() . " " . Utils::getRomanNumeral($selectedShop->getEnchantmentLevel()) . " for " . str_replace("{amount}", $selectedShop->getPrice(), $this->plugin->getConfig()->getNested("economy.currency-format")) . "?");
+                $form->setContent("Are you sure you would like to buy the enchantment " . $selectedShop->getEnchantment()->getName() . " " . Utils::getRomanNumeral($selectedShop->getEnchantmentLevel()) . " for " . str_replace("{amount}", (string)$selectedShop->getPrice(), $this->plugin->getConfig()->getNested("economy.currency-format")) . "?");
                 $form->setButton1("Yes");
                 $form->setButton2("No");
                 $player->sendForm($form);

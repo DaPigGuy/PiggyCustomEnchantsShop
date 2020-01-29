@@ -65,16 +65,16 @@ class EventListener implements Listener
                     if (!$this->plugin->getConfig()->getNested("shop-types.sign.double-tap")) {
                         $tile->purchaseItem($this->plugin, $player);
                     } else {
-                        if (!isset($this->lastTap[$player->getName()]) || (isset($this->tap[$player->getName()]) && $this->lastTap[$player->getName()] < time())) {
+                        if (!isset($this->lastTap[$player->getName()]) || (isset($this->lastTap[$player->getName()]) && $this->lastTap[$player->getName()] < time())) {
                             $this->lastTap[$player->getName()] = time() + 10;
-                            $player->sendMessage(TextFormat::YELLOW . "Tap again to buy " . $tile->getEnchantment()->getName() . " for " . str_replace("{amount}", $tile->getPrice(), $this->plugin->getConfig()->getNested("economy.currency-format")) . ".");
+                            $player->sendMessage(TextFormat::YELLOW . "Tap again to buy " . $tile->getEnchantment()->getName() . " for " . str_replace("{amount}", (string)$tile->getPrice(), $this->plugin->getConfig()->getNested("economy.currency-format")) . ".");
                         } else {
                             unset($this->lastTap[$player->getName()]);
                             $tile->purchaseItem($this->plugin, $player);
                         }
                     }
                 } else {
-                    $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", $tile->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player), $this->plugin->getConfig()->getNested("economy.currency-format")) . " more.");
+                    $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", (string)($tile->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player)), $this->plugin->getConfig()->getNested("economy.currency-format")) . " more.");
                 }
             }
         } elseif ($tile instanceof Sign) {

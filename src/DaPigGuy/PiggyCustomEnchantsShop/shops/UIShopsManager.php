@@ -67,10 +67,10 @@ class UIShopsManager
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return UIShop|null
      */
-    public function getShopById($id): ?UIShop
+    public function getShopById(int $id): ?UIShop
     {
         return isset($this->shops["id:" . $id]) ? $this->shops["id:" . $id] : null;
     }
