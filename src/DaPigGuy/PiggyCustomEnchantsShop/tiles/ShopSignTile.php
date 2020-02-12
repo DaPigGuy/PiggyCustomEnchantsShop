@@ -84,6 +84,10 @@ class ShopSignTile extends Sign
     {
         if (($enchant = $this->getEnchantment()) instanceof PlaceholderEnchant) return;
         if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $enchant, $this->getEnchantmentLevel())) {
+            if ($plugin->getEconomyProvider()->getMoney($player) < $this->getPrice()) {
+                $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", (string)($this->getPrice() - $plugin->getEconomyProvider()->getMoney($player)), $plugin->getConfig()->getNested("economy.currency-format")) . " more.");
+                return;
+            }
             $plugin->getEconomyProvider()->takeMoney($player, $this->getPrice());
             $item = $player->getInventory()->getItemInHand();
             $item->addEnchantment(new EnchantmentInstance($enchant, $this->getEnchantmentLevel()));
