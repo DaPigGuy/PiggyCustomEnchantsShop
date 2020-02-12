@@ -133,7 +133,8 @@ class EventListener implements Listener
         $tile = $level->getTile($event->getBlock());
         $lines = $event->getLines();
         if ($this->plugin->getConfig()->getNested("shop-types.sign.enabled")) {
-            if ($lines[0] === "ce" || $lines[0] === "[CE]") {
+            $lines[0] = strtolower($lines[0]);
+            if ($lines[0] === "ce" || $lines[0] === "[ce]") {
                 if (!$player->hasPermission("piggycustomenchantsshop.sign.create")) {
                     $event->setLines([TextFormat::RED . "You are not", TextFormat::RED . "allowed to do", TextFormat::RED . "this.", ""]);
                     if ($tile instanceof ShopSignTile) $event->setCancelled();
