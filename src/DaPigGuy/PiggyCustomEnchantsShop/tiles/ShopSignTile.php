@@ -15,10 +15,6 @@ use pocketmine\Player;
 use pocketmine\tile\Sign;
 use pocketmine\utils\TextFormat;
 
-/**
- * Class ShopSignTile
- * @package DaPigGuy\PiggyCustomEnchantsShop\tiles
- */
 class ShopSignTile extends Sign
 {
     /** @var Enchantment */
@@ -28,58 +24,36 @@ class ShopSignTile extends Sign
     /** @var int */
     public $price = 1;
 
-    /**
-     * @return Enchantment
-     */
     public function getEnchantment(): Enchantment
     {
         return $this->enchantment;
     }
 
-    /**
-     * @param Enchantment $enchantment
-     */
     public function setEnchantment(Enchantment $enchantment): void
     {
         $this->enchantment = $enchantment;
     }
 
-    /**
-     * @return int
-     */
     public function getEnchantmentLevel(): int
     {
         return $this->enchantmentLevel;
     }
 
-    /**
-     * @param int $level
-     */
     public function setEnchantmentLevel(int $level): void
     {
         $this->enchantmentLevel = $level;
     }
 
-    /**
-     * @return int
-     */
     public function getPrice(): int
     {
         return $this->price;
     }
 
-    /**
-     * @param int $price
-     */
     public function setPrice(int $price): void
     {
         $this->price = $price;
     }
 
-    /**
-     * @param PiggyCustomEnchantsShop $plugin
-     * @param Player $player
-     */
     public function purchaseItem(PiggyCustomEnchantsShop $plugin, Player $player): void
     {
         if (($enchant = $this->getEnchantment()) instanceof PlaceholderEnchant) return;
@@ -94,9 +68,6 @@ class ShopSignTile extends Sign
         $player->sendMessage(TextFormat::RED . "Enchantment could not be applied to item.");
     }
 
-    /**
-     * @param CompoundTag $nbt
-     */
     protected function readSaveData(CompoundTag $nbt): void
     {
         parent::readSaveData($nbt);
@@ -106,9 +77,6 @@ class ShopSignTile extends Sign
 
     }
 
-    /**
-     * @param CompoundTag $nbt
-     */
     protected function writeSaveData(CompoundTag $nbt): void
     {
         parent::writeSaveData($nbt);
@@ -117,9 +85,6 @@ class ShopSignTile extends Sign
         $nbt->setInt("Price", $this->price);
     }
 
-    /**
-     * @param CompoundTag $nbt
-     */
     public function addAdditionalSpawnData(CompoundTag $nbt): void
     {
         parent::addAdditionalSpawnData($nbt);

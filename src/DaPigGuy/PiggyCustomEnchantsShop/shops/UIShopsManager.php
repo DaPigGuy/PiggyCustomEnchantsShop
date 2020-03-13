@@ -10,10 +10,6 @@ use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\utils\Config;
 
-/**
- * Class UIShopsManager
- * @package DaPigGuy\PiggyCustomEnchantsShop\shops
- */
 class UIShopsManager
 {
     /** @var PiggyCustomEnchantsShop */
@@ -24,10 +20,6 @@ class UIShopsManager
     /** @var UIShop[] */
     private $shops = [];
 
-    /**
-     * UIShopsManager constructor.
-     * @param PiggyCustomEnchantsShop $plugin
-     */
     public function __construct(PiggyCustomEnchantsShop $plugin)
     {
         $this->plugin = $plugin;
@@ -43,9 +35,6 @@ class UIShopsManager
         }
     }
 
-    /**
-     * @param UIShop $shop
-     */
     public function addShop(UIShop $shop): void
     {
         $key = "id:" . $shop->getId();
@@ -54,9 +43,6 @@ class UIShopsManager
         $this->shops[$key] = $shop;
     }
 
-    /**
-     * @param UIShop $shop
-     */
     public function removeShop(UIShop $shop): void
     {
         $key = "id:" . $shop->getId();
@@ -67,10 +53,6 @@ class UIShopsManager
         }
     }
 
-    /**
-     * @param int $id
-     * @return UIShop|null
-     */
     public function getShopById(int $id): ?UIShop
     {
         return isset($this->shops["id:" . $id]) ? $this->shops["id:" . $id] : null;
@@ -84,9 +66,6 @@ class UIShopsManager
         return $this->shops;
     }
 
-    /**
-     * @return int
-     */
     public function getNextId(): int
     {
         return count($this->shops);

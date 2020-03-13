@@ -15,22 +15,11 @@ use pocketmine\item\enchantment\Enchantment;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
-/**
- * Class AddSubCommand
- * @package DaPigGuy\PiggyCustomEnchantsShop\commands\subcommands
- */
 class AddSubCommand extends BaseSubCommand
 {
     /** @var PiggyCustomEnchantsShop */
     private $plugin;
 
-    /**
-     * AddSubCommand constructor.
-     * @param PiggyCustomEnchantsShop $plugin
-     * @param string $name
-     * @param string $description
-     * @param array $aliases
-     */
     public function __construct(PiggyCustomEnchantsShop $plugin, string $name, string $description = "", array $aliases = [])
     {
         $this->plugin = $plugin;
@@ -38,8 +27,6 @@ class AddSubCommand extends BaseSubCommand
     }
 
     /**
-     * @param CommandSender $sender
-     * @param string $aliasUsed
      * @param array $args
      */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void

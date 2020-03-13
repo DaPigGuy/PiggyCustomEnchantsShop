@@ -20,10 +20,6 @@ use pocketmine\tile\Tile;
 use ReflectionClass;
 use ReflectionException;
 
-/**
- * Class PiggyCustomEnchantsShop
- * @package DaPigGuy\PiggyCustomEnchantsShop
- */
 class PiggyCustomEnchantsShop extends PluginBase
 {
     /** @var EconomyProvider */
@@ -85,17 +81,11 @@ class PiggyCustomEnchantsShop extends PluginBase
         $this->getServer()->getAsyncPool()->submitTask(new CheckUpdatesTask($this->getDescription()->getVersion(), $this->getDescription()->getCompatibleApis()[0]));
     }
 
-    /**
-     * @return EconomyProvider
-     */
     public function getEconomyProvider(): EconomyProvider
     {
         return $this->economyProvider;
     }
 
-    /**
-     * @return UIShopsManager|null
-     */
     public function getUIShopManager(): ?UIShopsManager
     {
         return $this->uiShopManager;

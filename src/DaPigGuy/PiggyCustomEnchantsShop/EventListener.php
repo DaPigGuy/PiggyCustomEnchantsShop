@@ -18,10 +18,6 @@ use pocketmine\tile\Tile;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
-/**
- * Class EventListener
- * @package DaPigGuy\PiggyCustomEnchantsShop
- */
 class EventListener implements Listener
 {
     /** @var PiggyCustomEnchantsShop */
@@ -30,18 +26,11 @@ class EventListener implements Listener
     /** @var array */
     private $lastTap;
 
-    /**
-     * EventListener constructor.
-     * @param PiggyCustomEnchantsShop $plugin
-     */
     public function __construct(PiggyCustomEnchantsShop $plugin)
     {
         $this->plugin = $plugin;
     }
 
-    /**
-     * @param BlockBreakEvent $event
-     */
     public function onBreak(BlockBreakEvent $event): void
     {
         $player = $event->getPlayer();
@@ -56,9 +45,6 @@ class EventListener implements Listener
         }
     }
 
-    /**
-     * @param PlayerInteractEvent $event
-     */
     public function onInteract(PlayerInteractEvent $event): void
     {
         $player = $event->getPlayer();
@@ -121,9 +107,6 @@ class EventListener implements Listener
         }
     }
 
-    /**
-     * @param SignChangeEvent $event
-     */
     public function onSignChange(SignChangeEvent $event): void
     {
         $player = $event->getPlayer();

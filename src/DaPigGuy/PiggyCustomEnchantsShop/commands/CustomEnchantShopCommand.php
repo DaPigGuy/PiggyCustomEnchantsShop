@@ -18,22 +18,11 @@ use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
-/**
- * Class CustomEnchantShopCommand
- * @package DaPigGuy\PiggyCustomEnchantsShop\commands
- */
 class CustomEnchantShopCommand extends BaseCommand
 {
     /** @var PiggyCustomEnchantsShop */
     private $plugin;
 
-    /**
-     * CustomEnchantShopCommand constructor.
-     * @param PiggyCustomEnchantsShop $plugin
-     * @param string $name
-     * @param string $description
-     * @param array $aliases
-     */
     public function __construct(PiggyCustomEnchantsShop $plugin, string $name, string $description = "", array $aliases = [])
     {
         $this->plugin = $plugin;
@@ -41,8 +30,6 @@ class CustomEnchantShopCommand extends BaseCommand
     }
 
     /**
-     * @param CommandSender $sender
-     * @param string $aliasUsed
      * @param array $args
      */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
@@ -54,9 +41,6 @@ class CustomEnchantShopCommand extends BaseCommand
         $this->sendEnchantsForm($sender);
     }
 
-    /**
-     * @param Player $player
-     */
     public function sendEnchantsForm(Player $player): void
     {
         /** @var UIShopsManager $shopManager */
