@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
 use CortexPE\Commando\BaseCommand;
+use CortexPE\Commando\exception\HookAlreadyRegistered;
+use CortexPE\Commando\PacketHooker;
 use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
 use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
@@ -35,6 +37,7 @@ class PiggyCustomEnchantsShop extends PluginBase
      * @throws ReflectionException
      * @throws MissingProviderDependencyException
      * @throws UnknownProviderException
+     * @throws HookAlreadyRegistered
      */
     public function onEnable(): void
     {
@@ -73,6 +76,7 @@ class PiggyCustomEnchantsShop extends PluginBase
         if ($this->getConfig()->getNested("shop-types.ui")) {
             $this->uiShopManager = new UIShopsManager($this);
             $this->uiShopManager->initShops();
+            if (!PacketHooker::isRegistered()) PacketHooker::register($this);
             $this->getServer()->getCommandMap()->register("piggycustomenchantsshop", new CustomEnchantShopCommand($this, "customenchantshop", "Buy Custom Enchants", ["ceshop"]));
         }
         Tile::registerTile(ShopSignTile::class);
