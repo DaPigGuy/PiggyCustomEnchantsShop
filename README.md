@@ -16,6 +16,7 @@ PiggyCustomEnchantsShop is an add-on the the PiggyCustomEnchants plugin, adding 
 3. (Optional) Configure formatting of your sign shops under `shop-types.sign.format`
 4. Start your server.
 5. **Sign Shops**: Place a sign down & create a sign shop with the following format:
+
     ![SignShopFormat](https://piggydocs.aericio.net/assets/img/piggycustomenchantsshop/pces-ss_visual.png)
 
    **UI Shops**: Use `/ceshop add` and enter requested information.
