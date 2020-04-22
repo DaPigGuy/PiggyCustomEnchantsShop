@@ -57,15 +57,19 @@ class ShopSignTile extends Sign
     public function purchaseItem(PiggyCustomEnchantsShop $plugin, Player $player): void
     {
         if (($enchant = $this->getEnchantment()) instanceof PlaceholderEnchant) return;
-        if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $enchant, $this->getEnchantmentLevel())) {
-            $plugin->getEconomyProvider()->takeMoney($player, $this->getPrice());
-            $item = $player->getInventory()->getItemInHand();
-            $item->addEnchantment(new EnchantmentInstance($enchant, $this->getEnchantmentLevel()));
-            $player->getInventory()->setItemInHand($item);
-            $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
+        if (($limit = $plugin->getConfig()->get("enchant-limit", -1)) !== -1 && count($player->getInventory()->getItemInHand()->getEnchantments()) >= $limit) {
+            $player->sendMessage(TextFormat::RED . "Enchantment limit of " . $limit . " reached.");
             return;
         }
-        $player->sendMessage(TextFormat::RED . "Enchantment could not be applied to item.");
+        if (!Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $enchant, $this->getEnchantmentLevel())) {
+            $player->sendMessage(TextFormat::RED . "Enchantment could not be applied to item.");
+            return;
+        }
+        $plugin->getEconomyProvider()->takeMoney($player, $this->getPrice());
+        $item = $player->getInventory()->getItemInHand();
+        $item->addEnchantment(new EnchantmentInstance($enchant, $this->getEnchantmentLevel()));
+        $player->getInventory()->setItemInHand($item);
+        $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
     }
 
     protected function readSaveData(CompoundTag $nbt): void

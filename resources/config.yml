@@ -3,6 +3,7 @@ economy:
   # This is used for the MultiEconomy provider
   multieconomy-currency: ""
   currency-format: "${amount}"
+enchant-limit: -1
 shop-types:
   sign:
     enabled: true

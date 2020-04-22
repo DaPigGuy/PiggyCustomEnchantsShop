@@ -58,19 +58,23 @@ class CustomEnchantShopCommand extends BaseCommand
                 $form = new ModalForm(function (Player $player, ?bool $data) use ($selectedShop) {
                     if ($data !== null) {
                         if ($data) {
-                            if (Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel())) {
-                                if ($this->plugin->getEconomyProvider()->getMoney($player) < $selectedShop->getPrice()) {
-                                    $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", (string)($selectedShop->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player)), $this->plugin->getConfig()->getNested("economy.currency-format")) . " more.");
-                                    return;
-                                }
-                                $this->plugin->getEconomyProvider()->takeMoney($player, $selectedShop->getPrice());
-                                $item = $player->getInventory()->getItemInHand();
-                                $item->addEnchantment(new EnchantmentInstance($selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel()));
-                                $player->getInventory()->setItemInHand($item);
-                                $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
+                            if (($limit = $this->plugin->getConfig()->get("enchant-limit", -1)) !== -1 && count($player->getInventory()->getItemInHand()->getEnchantments()) >= $limit) {
+                                $player->sendMessage(TextFormat::RED . "Enchantment limit of " . $limit . " reached.");
                                 return;
                             }
-                            $player->sendMessage(TextFormat::RED . "Enchantment could not be applied to item.");
+                            if (!Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel())) {
+                                $player->sendMessage(TextFormat::RED . "Enchantment could not be applied to item.");
+                                return;
+                            }
+                            if ($this->plugin->getEconomyProvider()->getMoney($player) < $selectedShop->getPrice()) {
+                                $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", (string)($selectedShop->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player)), $this->plugin->getConfig()->getNested("economy.currency-format")) . " more.");
+                                return;
+                            }
+                            $this->plugin->getEconomyProvider()->takeMoney($player, $selectedShop->getPrice());
+                            $item = $player->getInventory()->getItemInHand();
+                            $item->addEnchantment(new EnchantmentInstance($selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel()));
+                            $player->getInventory()->setItemInHand($item);
+                            $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
                         } else {
                             $this->sendEnchantsForm($player);
                         }
