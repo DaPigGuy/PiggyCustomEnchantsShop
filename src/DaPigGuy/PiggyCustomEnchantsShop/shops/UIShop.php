@@ -15,10 +15,10 @@ class UIShop
     private $enchantment;
     /** @var int */
     private $enchantmentLevel;
-    /** @var int */
+    /** @var float */
     private $price;
 
-    public function __construct(int $id, Enchantment $enchantment, int $enchantmentLevel, int $price)
+    public function __construct(int $id, Enchantment $enchantment, int $enchantmentLevel, float $price)
     {
         $this->id = $id;
         $this->enchantment = $enchantment;
@@ -51,12 +51,12 @@ class UIShop
         $this->enchantmentLevel = $level;
     }
 
-    public function getPrice(): int
+    public function getPrice(): float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): void
+    public function setPrice(float $price): void
     {
         $this->price = $price;
     }
