@@ -14,11 +14,13 @@ use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
+use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 
-class CustomEnchantShopCommand extends BaseCommand
+class CustomEnchantShopCommand extends BaseCommand implements PluginIdentifiableCommand
 {
     /** @var PiggyCustomEnchantsShop */
     private $plugin;
@@ -27,6 +29,11 @@ class CustomEnchantShopCommand extends BaseCommand
     {
         $this->plugin = $plugin;
         parent::__construct($name, $description, $aliases);
+    }
+
+    public function getPlugin(): Plugin
+    {
+        return $this->plugin;
     }
 
     /**
