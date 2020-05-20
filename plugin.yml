@@ -5,7 +5,7 @@ api: 3.2.0
 load: POSTWORLD
 author: DaPigGuy
 depend: ["PiggyCustomEnchants"]
-softdepend: ["EconomyAPI"]
+softdepend: ["EconomyAPI", "MultiEconomy"]
 website: "https://github.com/DaPigGuy/PiggyCustomEnchantsShop/"
 permissions:
   piggycustomenchantsshop:
