@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace DaPigGuy\PiggyCustomEnchantsShop\commands;
 
 use CortexPE\Commando\BaseCommand;
-use CortexPE\Commando\exception\SubCommandCollision;
 use DaPigGuy\PiggyCustomEnchants\utils\Utils;
 use DaPigGuy\PiggyCustomEnchantsShop\commands\subcommands\AddSubCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
@@ -14,27 +13,14 @@ use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\Player;
-use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 
-class CustomEnchantShopCommand extends BaseCommand implements PluginIdentifiableCommand
+class CustomEnchantShopCommand extends BaseCommand
 {
     /** @var PiggyCustomEnchantsShop */
-    private $plugin;
-
-    public function __construct(PiggyCustomEnchantsShop $plugin, string $name, string $description = "", array $aliases = [])
-    {
-        $this->plugin = $plugin;
-        parent::__construct($name, $description, $aliases);
-    }
-
-    public function getPlugin(): Plugin
-    {
-        return $this->plugin;
-    }
+    protected $plugin;
 
     /**
      * @param array $args
@@ -101,9 +87,6 @@ class CustomEnchantShopCommand extends BaseCommand implements PluginIdentifiable
         $player->sendForm($form);
     }
 
-    /**
-     * @throws SubCommandCollision
-     */
     public function prepare(): void
     {
         $this->setPermission("piggycustomenchantsshop.command.ceshop.use");

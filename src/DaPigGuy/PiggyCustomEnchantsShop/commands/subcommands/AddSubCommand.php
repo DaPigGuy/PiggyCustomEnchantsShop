@@ -18,13 +18,7 @@ use pocketmine\utils\TextFormat;
 class AddSubCommand extends BaseSubCommand
 {
     /** @var PiggyCustomEnchantsShop */
-    private $plugin;
-
-    public function __construct(PiggyCustomEnchantsShop $plugin, string $name, string $description = "", array $aliases = [])
-    {
-        $this->plugin = $plugin;
-        parent::__construct($name, $description, $aliases);
-    }
+    protected $plugin;
 
     /**
      * @param array $args
