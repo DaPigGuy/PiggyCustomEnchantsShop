@@ -75,7 +75,7 @@ class PiggyCustomEnchantsShop extends PluginBase
             $this->uiShopManager = new UIShopsManager($this);
             $this->uiShopManager->initShops();
             if (!PacketHooker::isRegistered()) PacketHooker::register($this);
-            $this->getServer()->getCommandMap()->register("piggycustomenchantsshop", new CustomEnchantShopCommand($this, "customenchantshop", "Buy Custom Enchants", ["ceshop"]));
+            $this->getServer()->getCommandMap()->register("piggycustomenchantsshop", new CustomEnchantShopCommand($this, "customenchantshop", "Opens enchantment shop menu", ["ceshop"]));
         }
         Tile::registerTile(ShopSignTile::class);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);

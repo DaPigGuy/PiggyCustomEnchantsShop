@@ -90,6 +90,6 @@ class CustomEnchantShopCommand extends BaseCommand
     public function prepare(): void
     {
         $this->setPermission("piggycustomenchantsshop.command.ceshop.use");
-        $this->registerSubCommand(new AddSubCommand($this->plugin, "add", "Add a shop entry to PiggyCustomEnchantsShop"));
+        $this->registerSubCommand(new AddSubCommand($this->plugin, "add", "Opens enchantment shop configuration menu"));
     }
 }

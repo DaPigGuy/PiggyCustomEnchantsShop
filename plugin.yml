@@ -10,32 +10,32 @@ website: "https://github.com/DaPigGuy/PiggyCustomEnchantsShop/"
 permissions:
   piggycustomenchantsshop:
     default: op
-    description: "Use everything in PiggyCustomEnchantsShop"
+    description: "Allows usage of all PiggyCustomEnchantsShop features"
     children:
+      piggycustomenchantsshop.command:
+        default: op
+        description: "Allow usage of all PiggyCustomEnchantsShop commands"
+        children:
+          piggycustomenchantsshop.command.ceshop:
+            default: op
+            description: "Allow usage of both /ceshop & /ceshop add"
+            children:
+              piggycustomenchantsshop.command.ceshop.add:
+                default: op
+                description: "Allow usage of /ceshop add"
+              piggycustomenchantsshop.command.ceshop.use:
+                default: true
+                description: "Allow usage of /ceshop"
       piggycustomenchantsshop.sign:
-        description: "Use all sign related permissions"
+        description: "Allows usage of all sign shop features"
         default: op
         children:
           piggycustomenchantsshop.sign.break:
             default: op
-            descriptiom: "Break CE shop signs"
+            descriptiom: "Allows breaking of sign shops"
           piggycustomenchantsshop.sign.create:
             default: op
-            description: "Create CE shop signs"
+            description: "Allows creation of sign shops"
           piggycustomenchantsshop.sign.use:
             default: true
-            description: "Use CE shop signs"
-      piggycustomenchantsshop.command:
-        default: op
-        description: "Use all PiggyCustomEnchantsShop commands"
-        children:
-          piggycustomenchantsshop.command.ceshop:
-            default: op
-            description: "Use /ceshop"
-            children:
-              piggycustomenchantsshop.command.ceshop.add:
-                default: op
-                description: "Use /ceshop add"
-              piggycustomenchantsshop.command.ceshop.use:
-                default: true
-                description: "Use /ceshop"
+            description: "Allows usage of sign shops"
