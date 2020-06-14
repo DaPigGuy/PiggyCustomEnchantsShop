@@ -35,19 +35,19 @@ class AddSubCommand extends BaseSubCommand
                 ($enchantment = Enchantment::getEnchantmentByName($args["enchantment"])) === null &&
                 (!is_numeric($args["enchantment"]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$args["enchantment"])) === null && ($enchantment = Enchantment::getEnchantment((int)$args["enchantment"])) === null))
             ) {
-                $sender->sendMessage(TextFormat::RED . "Invalid enchantment.");
+                $sender->sendMessage($this->plugin->getMessage("menu.add.invalid-enchantment"));
                 return;
             }
             if (!is_numeric($args["level"])) {
-                $sender->sendMessage(TextFormat::RED . "Level must be numerical.");
+                $sender->sendMessage($this->plugin->getMessage("menu.add.level-not-numerical"));
                 return;
             }
             if (!is_numeric($args["price"])) {
-                $sender->sendMessage(TextFormat::RED . "Price must be numerical.");
+                $sender->sendMessage($this->plugin->getMessage("menu.add.price-not-numerical"));
                 return;
             }
             $shopManager->addShop(new UIShop($shopManager->getNextId(), $enchantment, (int)$args["level"], (int)$args["price"]));
-            $sender->sendMessage(TextFormat::GREEN . "Shop entry has been created.");
+            $sender->sendMessage($this->plugin->getMessage("menu.add.entry-created"));
         } else {
             if ($sender instanceof Player) {
                 $form = new CustomForm(function (Player $player, ?array $data) use ($shopManager): void {
@@ -57,23 +57,22 @@ class AddSubCommand extends BaseSubCommand
                             ($enchantment = Enchantment::getEnchantmentByName($data[0])) === null &&
                             (!is_numeric($data[0]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$data[0])) === null && ($enchantment = Enchantment::getEnchantment((int)$data[0])) === null))
                         ) {
-                            $player->sendMessage(TextFormat::RED . "Invalid enchantment.");
+                            $player->sendMessage($this->plugin->getMessage("menu.add.invalid-enchantment"));
                             return;
                         }
                         if (!is_numeric($data[1])) {
-                            $player->sendMessage(TextFormat::RED . "Level must be numerical.");
+                            $player->sendMessage($this->plugin->getMessage("menu.add.level-not-numerical"));
                             return;
                         }
                         if (!is_numeric($data[2])) {
-                            $player->sendMessage(TextFormat::RED . "Price must be numerical.");
+                            $player->sendMessage($this->plugin->getMessage("menu.add.price-not-numerical"));
                             return;
                         }
                         $shopManager->addShop(new UIShop($shopManager->getNextId(), $enchantment, (int)$data[1], (int)$data[2]));
-                        $player->sendMessage(TextFormat::GREEN . "Shop entry has been created.");
-
+                        $player->sendMessage($this->plugin->getMessage("menu.add.entry-created"));
                     }
                 });
-                $form->setTitle(TextFormat::GREEN . "Add Shop Entry");
+                $form->setTitle($this->plugin->getMessage("menu.add.title"));
                 $form->addInput("Enchantment", "", empty($args["enchantment"]) ? null : $args["enchantment"]);
                 $form->addSlider("Level", 1, 5, 1, empty($args["level"]) ? 1 : $args["level"]);
                 $form->addInput("Price", "", empty($args["price"]) ? null : $args["price"]);

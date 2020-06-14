@@ -1,0 +1,20 @@
+command:
+  use-in-game: "{RED}Please use this in-game."
+menu:
+  title: "{GREEN}Custom Enchant Shop"
+  button: "{ENCHANTMENT} {LEVEL}"
+  no-shop-entries: "{RED}There are no existing shop entries."
+  item:
+    enchantment-limit: "{RED}Enchantment limit of {LIMIT} reached."
+    cant-be-enchanted: "{RED}Enchantment could not be applied to item."
+    not-enough-money: "{RED}Not enough money. Need {AMOUNT} more."
+    success: "{GREEN}Item has successfully been enchanted."
+  confirmation:
+    title: "{GREEN}Purchase Confirmation"
+    content: "Are you sure you would like to buy the enchantment {ENCHANTMENT} {LEVEL} for {AMOUNT}?"
+  add:
+    title: "{GREEN}Add Shop Entry"
+    invalid-enchantment: "{RED}Invalid enchantment."
+    level-not-numerical: "{RED}Level must be numerical."
+    price-not-numerical: "{RED}Price must be numerical."
+    entry-created: "{GREEN}Shop entry has been created."

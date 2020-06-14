@@ -15,15 +15,20 @@ use DaPigGuy\PiggyCustomEnchantsShop\commands\CustomEnchantShopCommand;
 use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use DaPigGuy\PiggyCustomEnchantsShop\tasks\CheckUpdatesTask;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
+use DaPigGuy\PiggyCustomEnchantsShop\utils\Utils;
 use jojoe77777\FormAPI\Form;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\plugin\PluginBase;
 use pocketmine\tile\Tile;
+use pocketmine\utils\Config;
 use ReflectionClass;
 use ReflectionException;
 
 class PiggyCustomEnchantsShop extends PluginBase
 {
+    /** @var Config */
+    private $messages;
+
     /** @var EconomyProvider */
     public $economyProvider;
 
@@ -33,12 +38,6 @@ class PiggyCustomEnchantsShop extends PluginBase
     /** @var array */
     public static $vanillaEnchantmentNames = [];
 
-    /**
-     * @throws ReflectionException
-     * @throws MissingProviderDependencyException
-     * @throws UnknownProviderException
-     * @throws HookAlreadyRegistered
-     */
     public function onEnable(): void
     {
         foreach (
@@ -66,6 +65,8 @@ class PiggyCustomEnchantsShop extends PluginBase
             }
         }
 
+        $this->saveResource("messages.yml");
+        $this->messages = new Config($this->getDataFolder() . "messages.yml");
         $this->saveDefaultConfig();
 
         libPiggyEconomy::init();
@@ -81,6 +82,11 @@ class PiggyCustomEnchantsShop extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
         $this->getServer()->getAsyncPool()->submitTask(new CheckUpdatesTask());
+    }
+
+    public function getMessage(string $key, array $tags = []): string
+    {
+        return Utils::translateColorTags(str_replace(array_keys($tags), $tags, $this->messages->getNested($key, $key)));
     }
 
     public function getEconomyProvider(): EconomyProvider

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DaPigGuy\PiggyCustomEnchantsShop\commands;
@@ -15,7 +16,6 @@ use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\Player;
-use pocketmine\utils\TextFormat;
 
 class CustomEnchantShopCommand extends BaseCommand
 {
@@ -28,7 +28,7 @@ class CustomEnchantShopCommand extends BaseCommand
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         if (!$sender instanceof Player) {
-            $sender->sendMessage(TextFormat::RED . "Please use this in-game.");
+            $sender->sendMessage($this->plugin->getMessage("command.use-in-game"));
             return;
         }
         $this->sendEnchantsForm($sender);
@@ -42,7 +42,7 @@ class CustomEnchantShopCommand extends BaseCommand
             return !$shop->getEnchantment() instanceof PlaceholderEnchant;
         });
         if (count($shops) === 0) {
-            $player->sendMessage(TextFormat::RED . "There are no existing shop entries.");
+            $player->sendMessage($this->plugin->getMessage("menu.no-shop-entries"));
             return;
         }
         $form = new SimpleForm(function (Player $player, ?int $data) use ($shops) {
@@ -52,37 +52,37 @@ class CustomEnchantShopCommand extends BaseCommand
                     if ($data !== null) {
                         if ($data) {
                             if (($limit = $this->plugin->getConfig()->get("enchant-limit", -1)) !== -1 && count($player->getInventory()->getItemInHand()->getEnchantments()) >= $limit) {
-                                $player->sendMessage(TextFormat::RED . "Enchantment limit of " . $limit . " reached.");
+                                $player->sendMessage($this->plugin->getMessage("menu.item.enchantment-limit", ["{LIMIT}" => $limit]));
                                 return;
                             }
                             if (!Utils::canBeEnchanted($player->getInventory()->getItemInHand(), $selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel())) {
-                                $player->sendMessage(TextFormat::RED . "Enchantment could not be applied to item.");
+                                $player->sendMessage($this->plugin->getMessage("menu.item.cant-be-enchanted"));
                                 return;
                             }
                             if ($this->plugin->getEconomyProvider()->getMoney($player) < $selectedShop->getPrice()) {
-                                $player->sendMessage(TextFormat::RED . "Not enough money. Need " . str_replace("{amount}", (string)($selectedShop->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player)), $this->plugin->getConfig()->getNested("economy.currency-format")) . " more.");
+                                $player->sendMessage($this->plugin->getMessage("menu.item.not-enough-money", ["{AMOUNT}" => str_replace("{amount}", (string)($selectedShop->getPrice() - $this->plugin->getEconomyProvider()->getMoney($player)), $this->plugin->getConfig()->getNested("economy.currency-format"))]));
                                 return;
                             }
                             $this->plugin->getEconomyProvider()->takeMoney($player, $selectedShop->getPrice());
                             $item = $player->getInventory()->getItemInHand();
                             $item->addEnchantment(new EnchantmentInstance($selectedShop->getEnchantment(), $selectedShop->getEnchantmentLevel()));
                             $player->getInventory()->setItemInHand($item);
-                            $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
+                            $player->sendMessage($this->plugin->getMessage("menu.item.success"));
                         } else {
                             $this->sendEnchantsForm($player);
                         }
                     }
                 });
-                $form->setTitle(TextFormat::GREEN . "Purchase Confirmation");
-                $form->setContent("Are you sure you would like to buy the enchantment " . $selectedShop->getEnchantment()->getName() . " " . Utils::getRomanNumeral($selectedShop->getEnchantmentLevel()) . " for " . str_replace("{amount}", (string)$selectedShop->getPrice(), $this->plugin->getConfig()->getNested("economy.currency-format")) . "?");
+                $form->setTitle($this->plugin->getMessage("menu.confirmation.title"));
+                $form->setContent($this->plugin->getMessage("menu.confirmation.content", ["{ENCHANTMENT}" => $selectedShop->getEnchantment()->getName(), "{LEVEL}" => Utils::getRomanNumeral($selectedShop->getEnchantmentLevel()), "{AMOUNT}" => str_replace("{amount}", (string)$selectedShop->getPrice(), $this->plugin->getConfig()->getNested("economy.currency-format"))]));
                 $form->setButton1("Yes");
                 $form->setButton2("No");
                 $player->sendForm($form);
             }
         });
-        $form->setTitle(TextFormat::GREEN . "Custom Enchant Shop");
+        $form->setTitle($this->plugin->getMessage("menu.title"));
         foreach ($shops as $shop) {
-            $form->addButton($shop->getEnchantment()->getName() . " " . Utils::getRomanNumeral($shop->getEnchantmentLevel()));
+            $form->addButton($this->plugin->getMessage("menu.button", ["{ENCHANTMENT}" => $shop->getEnchantment()->getName(), "{LEVEL}" => Utils::getRomanNumeral($shop->getEnchantmentLevel())]));
         }
         $player->sendForm($form);
     }
