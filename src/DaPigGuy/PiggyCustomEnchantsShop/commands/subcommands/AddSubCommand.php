@@ -32,7 +32,7 @@ class AddSubCommand extends BaseSubCommand
             if (
                 ($enchantment = CustomEnchantManager::getEnchantmentByName($args["enchantment"])) === null &&
                 ($enchantment = Enchantment::fromString($args["enchantment"])) === null &&
-                (!is_numeric($args["enchantment"]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$args["enchantment"])) === null && ($enchantment = Enchantment::getEnchantment((int)$args["enchantment"])) === null))
+                (!is_numeric($args["enchantment"]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$args["enchantment"])) === null && ($enchantment = Enchantment::get((int)$args["enchantment"])) === null))
             ) {
                 $sender->sendMessage($this->plugin->getMessage("menu.add.invalid-enchantment"));
                 return;

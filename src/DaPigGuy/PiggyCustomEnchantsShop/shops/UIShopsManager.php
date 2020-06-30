@@ -31,7 +31,7 @@ class UIShopsManager
     public function initShops(): void
     {
         foreach ($this->file->getAll() as $key => $value) {
-            $this->shops[$key] = new UIShop((int)str_replace("id:", "", (string)$key), CustomEnchantManager::getEnchantmentByName($value[0]) ?? Enchantment::getEnchantmentByName($value[0]) ?? new PlaceholderEnchant(0, $value[0]), $value[1], $value[2]);
+            $this->shops[$key] = new UIShop((int)str_replace("id:", "", (string)$key), CustomEnchantManager::getEnchantmentByName($value[0]) ?? Enchantment::fromString($value[0]) ?? new PlaceholderEnchant(0, $value[0]), $value[1], $value[2]);
         }
     }
 

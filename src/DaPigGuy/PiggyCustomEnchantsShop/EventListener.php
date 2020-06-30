@@ -72,7 +72,7 @@ class EventListener implements Listener
             $tile->purchaseItem($this->plugin, $player);
 
         } elseif ($tile instanceof Sign) {
-            $lines = $tile->getText();
+            $lines = $tile->getText()->getLines();
             /**
              * Converts signs from pre 1.3.0
              */
