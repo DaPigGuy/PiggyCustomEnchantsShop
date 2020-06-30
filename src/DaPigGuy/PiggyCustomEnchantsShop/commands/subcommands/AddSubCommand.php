@@ -14,8 +14,7 @@ use DaPigGuy\PiggyCustomEnchantsShop\shops\UIShopsManager;
 use jojoe77777\FormAPI\CustomForm;
 use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\Enchantment;
-use pocketmine\Player;
-use pocketmine\utils\TextFormat;
+use pocketmine\player\Player;
 
 class AddSubCommand extends BaseSubCommand
 {
@@ -32,7 +31,7 @@ class AddSubCommand extends BaseSubCommand
         if (count($args) >= 3) {
             if (
                 ($enchantment = CustomEnchantManager::getEnchantmentByName($args["enchantment"])) === null &&
-                ($enchantment = Enchantment::getEnchantmentByName($args["enchantment"])) === null &&
+                ($enchantment = Enchantment::fromString($args["enchantment"])) === null &&
                 (!is_numeric($args["enchantment"]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$args["enchantment"])) === null && ($enchantment = Enchantment::getEnchantment((int)$args["enchantment"])) === null))
             ) {
                 $sender->sendMessage($this->plugin->getMessage("menu.add.invalid-enchantment"));
@@ -54,8 +53,8 @@ class AddSubCommand extends BaseSubCommand
                     if ($data !== null) {
                         if (
                             ($enchantment = CustomEnchantManager::getEnchantmentByName($data[0])) === null &&
-                            ($enchantment = Enchantment::getEnchantmentByName($data[0])) === null &&
-                            (!is_numeric($data[0]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$data[0])) === null && ($enchantment = Enchantment::getEnchantment((int)$data[0])) === null))
+                            ($enchantment = Enchantment::fromString($data[0])) === null &&
+                            (!is_numeric($data[0]) || (($enchantment = CustomEnchantManager::getEnchantment((int)$data[0])) === null && ($enchantment = Enchantment::get((int)$data[0])) === null))
                         ) {
                             $player->sendMessage($this->plugin->getMessage("menu.add.invalid-enchantment"));
                             return;

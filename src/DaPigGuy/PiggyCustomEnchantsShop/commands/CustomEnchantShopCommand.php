@@ -15,7 +15,7 @@ use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\EnchantmentInstance;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class CustomEnchantShopCommand extends BaseCommand
 {

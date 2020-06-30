@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace DaPigGuy\PiggyCustomEnchantsShop;
 
 use CortexPE\Commando\BaseCommand;
-use CortexPE\Commando\exception\HookAlreadyRegistered;
 use CortexPE\Commando\PacketHooker;
-use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
-use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\PiggyCustomEnchantsShop\commands\CustomEnchantShopCommand;
@@ -17,12 +14,11 @@ use DaPigGuy\PiggyCustomEnchantsShop\tasks\CheckUpdatesTask;
 use DaPigGuy\PiggyCustomEnchantsShop\tiles\ShopSignTile;
 use DaPigGuy\PiggyCustomEnchantsShop\utils\Utils;
 use jojoe77777\FormAPI\Form;
+use pocketmine\block\tile\TileFactory;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\plugin\PluginBase;
-use pocketmine\tile\Tile;
 use pocketmine\utils\Config;
 use ReflectionClass;
-use ReflectionException;
 
 class PiggyCustomEnchantsShop extends PluginBase
 {
@@ -59,7 +55,7 @@ class PiggyCustomEnchantsShop extends PluginBase
         foreach ($reflection->getConstants() as $name => $id) {
             $lastEnchantmentId++;
             if ($id !== $lastEnchantmentId) break;
-            $enchantment = Enchantment::getEnchantment($id);
+            $enchantment = Enchantment::get($id);
             if ($enchantment instanceof Enchantment) {
                 self::$vanillaEnchantmentNames[$enchantment->getName()] = ucwords(strtolower(str_replace("_", " ", $name)));
             }
@@ -78,7 +74,7 @@ class PiggyCustomEnchantsShop extends PluginBase
             if (!PacketHooker::isRegistered()) PacketHooker::register($this);
             $this->getServer()->getCommandMap()->register("piggycustomenchantsshop", new CustomEnchantShopCommand($this, "customenchantshop", "Opens enchantment shop menu", ["ceshop"]));
         }
-        Tile::registerTile(ShopSignTile::class);
+        TileFactory::getInstance()->register(ShopSignTile::class);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
         $this->getServer()->getAsyncPool()->submitTask(new CheckUpdatesTask());
