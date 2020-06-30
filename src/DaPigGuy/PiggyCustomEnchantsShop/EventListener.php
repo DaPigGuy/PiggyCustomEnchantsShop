@@ -97,6 +97,7 @@ class EventListener implements Listener
                         str_replace(["&", "{enchantment}", "{world}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-three")),
                         str_replace(["&", "{enchantment}", "{world}", "{price}"], [TextFormat::ESCAPE, ucfirst($enchantment->getName()), $enchantmentLevel, $price], $this->plugin->getConfig()->getNested("shop-types.sign.format.line-four"))
                     ]));
+                    $world->addTile($newTile);
                     $tile->close();
                 }
             }
@@ -139,8 +140,8 @@ class EventListener implements Listener
 
                 $newTile = $tile;
                 if ($tile instanceof Sign) {
-                    /** @var ShopSignTile $newTile */
                     $newTile = new ShopSignTile($tile->getPos()->getWorld(), $tile->getPos());
+                    $tile->getPos()->getWorld()->addTile($newTile);
                     $tile->close();
                 }
                 $enchantmentName = PiggyCustomEnchantsShop::$vanillaEnchantmentNames[$enchantment->getName()] ?? $enchantment->getName();
