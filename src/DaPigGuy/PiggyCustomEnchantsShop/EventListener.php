@@ -19,13 +19,10 @@ use pocketmine\utils\TextFormat;
 
 class EventListener implements Listener
 {
-    /** @var PiggyCustomEnchantsShop */
-    private $plugin;
+    /** @var int[] */
+    private array $lastTap;
 
-    /** @var array */
-    private $lastTap;
-
-    public function __construct(PiggyCustomEnchantsShop $plugin)
+    public function __construct(private PiggyCustomEnchantsShop $plugin)
     {
         $this->plugin = $plugin;
     }

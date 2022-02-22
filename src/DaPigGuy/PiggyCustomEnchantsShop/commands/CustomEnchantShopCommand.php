@@ -22,9 +22,6 @@ class CustomEnchantShopCommand extends BaseCommand
     /** @var PiggyCustomEnchantsShop */
     protected $plugin;
 
-    /**
-     * @param array $args
-     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         if (!$sender instanceof Player) {

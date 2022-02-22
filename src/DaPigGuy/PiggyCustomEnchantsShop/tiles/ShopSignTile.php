@@ -18,12 +18,9 @@ use pocketmine\utils\TextFormat;
 
 class ShopSignTile extends Sign
 {
-    /** @var Enchantment */
-    public $enchantment;
-    /** @var int */
-    public $enchantmentLevel = 1;
-    /** @var float */
-    public $price = 1;
+    public Enchantment $enchantment;
+    public int $enchantmentLevel = 1;
+    public float $price = 1;
 
     public function getEnchantment(): Enchantment
     {

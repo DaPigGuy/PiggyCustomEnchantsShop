@@ -22,17 +22,14 @@ use ReflectionClass;
 
 class PiggyCustomEnchantsShop extends PluginBase
 {
-    /** @var Config */
-    private $messages;
+    private Config $messages;
 
-    /** @var EconomyProvider */
-    public $economyProvider;
+    public EconomyProvider $economyProvider;
 
-    /** @var UIShopsManager */
-    public $uiShopManager = null;
+    public ?UIShopsManager $uiShopManager = null;
 
-    /** @var array */
-    public static $vanillaEnchantmentNames = [];
+    /** @var string[] */
+    public static array $vanillaEnchantmentNames = [];
 
     public function onEnable(): void
     {

@@ -12,18 +12,13 @@ use pocketmine\utils\Config;
 
 class UIShopsManager
 {
-    /** @var PiggyCustomEnchantsShop */
-    private $plugin;
-    /** @var Config */
-    private $file;
+    private Config $file;
 
     /** @var UIShop[] */
-    private $shops = [];
+    private array $shops = [];
 
-    public function __construct(PiggyCustomEnchantsShop $plugin)
+    public function __construct(private PiggyCustomEnchantsShop $plugin)
     {
-        $this->plugin = $plugin;
-
         @mkdir($this->plugin->getDataFolder() . "ui");
         $this->file = new Config($this->plugin->getDataFolder() . "ui/shops.yml");
     }
