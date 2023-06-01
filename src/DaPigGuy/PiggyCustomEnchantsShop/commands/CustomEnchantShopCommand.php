@@ -15,16 +15,13 @@ use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\EnchantmentInstance;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class CustomEnchantShopCommand extends BaseCommand
 {
     /** @var PiggyCustomEnchantsShop */
     protected $plugin;
 
-    /**
-     * @param array $args
-     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         if (!$sender instanceof Player) {

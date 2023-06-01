@@ -1,7 +1,5 @@
 economy:
-  provider: EconomyS
-  # This is used for the MultiEconomy provider
-  multieconomy-currency: ""
+  provider: bedrockeconomy
   currency-format: "${amount}"
 enchant-limit: -1
 shop-types:

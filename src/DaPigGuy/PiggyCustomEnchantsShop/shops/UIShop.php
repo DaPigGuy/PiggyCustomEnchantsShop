@@ -8,22 +8,8 @@ use pocketmine\item\enchantment\Enchantment;
 
 class UIShop
 {
-    /** @var int */
-    private $id;
-
-    /** @var Enchantment */
-    private $enchantment;
-    /** @var int */
-    private $enchantmentLevel;
-    /** @var float */
-    private $price;
-
-    public function __construct(int $id, Enchantment $enchantment, int $enchantmentLevel, float $price)
+    public function __construct(private int $id, private Enchantment $enchantment, private int $enchantmentLevel, private float $price)
     {
-        $this->id = $id;
-        $this->enchantment = $enchantment;
-        $this->enchantmentLevel = $enchantmentLevel;
-        $this->price = $price;
     }
 
     public function getId(): int

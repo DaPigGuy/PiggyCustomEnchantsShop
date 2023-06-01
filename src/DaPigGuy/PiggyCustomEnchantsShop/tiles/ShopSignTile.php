@@ -8,22 +8,19 @@ use DaPigGuy\PiggyCustomEnchants\CustomEnchantManager;
 use DaPigGuy\PiggyCustomEnchants\utils\Utils;
 use DaPigGuy\PiggyCustomEnchantsShop\enchants\PlaceholderEnchant;
 use DaPigGuy\PiggyCustomEnchantsShop\PiggyCustomEnchantsShop;
+use pocketmine\block\tile\Sign;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\NamedTag;
-use pocketmine\Player;
-use pocketmine\tile\Sign;
+use pocketmine\nbt\tag\Tag;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
 class ShopSignTile extends Sign
 {
-    /** @var Enchantment */
-    public $enchantment;
-    /** @var int */
-    public $enchantmentLevel = 1;
-    /** @var float */
-    public $price = 1;
+    public Enchantment $enchantment;
+    public int $enchantmentLevel = 1;
+    public float $price = 1;
 
     public function getEnchantment(): Enchantment
     {
@@ -73,12 +70,12 @@ class ShopSignTile extends Sign
         $player->sendMessage(TextFormat::GREEN . "Item has successfully been enchanted.");
     }
 
-    protected function readSaveData(CompoundTag $nbt): void
+    public function readSaveData(CompoundTag $nbt): void
     {
         parent::readSaveData($nbt);
-        $this->enchantment = CustomEnchantManager::getEnchantment($nbt->getInt("Enchantment")) ?? Enchantment::getEnchantment($nbt->getInt("Enchantment")) ?? new PlaceholderEnchant($nbt->getInt("Enchantment"));
+        $this->enchantment = CustomEnchantManager::getEnchantment($nbt->getInt("Enchantment")) ?? Enchantment::get($nbt->getInt("Enchantment")) ?? new PlaceholderEnchant($nbt->getInt("Enchantment"));
         $this->enchantmentLevel = $nbt->getInt("EnchantmentLevel");
-        $this->price = (float)$nbt->getTagValue("Price", NamedTag::class);
+        $this->price = (float)$nbt->getTagValue("Price", Tag::class);
 
     }
 
